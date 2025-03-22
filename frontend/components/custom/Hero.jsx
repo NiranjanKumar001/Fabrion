@@ -6,6 +6,15 @@ import React, { useState } from 'react'
 
 function Hero() {
     const [userInput, setUserInput] = useState();
+
+    const { messages, setMessages } = useContext(MessagesContext);
+
+    const onGenerate = () => {
+        setMessages({
+            role: 'user',
+            content: input
+        })
+    }
     
 
     return (
