@@ -1,9 +1,16 @@
+"use client"
 import React from 'react'
-
-function provider() {
-  return (
-    <div>provider</div>
-  )
+import { ThemeProvider as NextThemesProvider } from "next-themes"
+function Provider({children}) {
+    return (
+        <div>
+            <NextThemesProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange>{children}</NextThemesProvider>
+        </div>
+    )
 }
 
-export default provider
+export default Provider
