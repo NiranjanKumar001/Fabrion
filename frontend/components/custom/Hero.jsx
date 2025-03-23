@@ -42,7 +42,7 @@ function Hero() {
             message:[msg]
         })
         console.log(workspaceId)
-        router.push('/workspace/'+workspaceId) // routing created for the proper navigation in the page also the route is seperated for diff users using the workspace id
+        router.push('/workspace/'+workspaceId) 
     }
 
     return (
