@@ -9,6 +9,7 @@ function Provider({ children }) {
 
     return (
         <div>
+            <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_KEY}>
             <UserDetailContext.Provider value={{userDetail, setUserDetail}}>
             <MessagesContext.Provider value={{ messages, setMessages }}>
                 <NextThemesProvider
@@ -18,6 +19,7 @@ function Provider({ children }) {
                     disableTransitionOnChange>{children}</NextThemesProvider>
             </MessagesContext.Provider>
             </UserDetailContext.Provider>
+            </GoogleOAuthProvider>
         </div>
     )
 }
