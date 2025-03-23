@@ -10,6 +10,8 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useRouter } from 'next/navigation';
 
+//requires debugging for future check this out
+
 function Hero() {
     const [userInput, setUserInput] = useState();
 
