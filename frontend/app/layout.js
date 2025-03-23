@@ -1,6 +1,7 @@
 import Header from "@/components/custom/Header";
 import "./globals.css";
 import Provider from "./provider";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,9 +12,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Provider>
-          <Header/>
-          {children}</Provider>
+        <ConvexClientProvider>
+          <Provider>
+            <Header />
+            {children}
+          </Provider>
+        </ConvexClientProvider>
       </body>
     </html>
   );
