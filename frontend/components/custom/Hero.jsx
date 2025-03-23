@@ -23,7 +23,7 @@ function Hero() {
 
     const router =useRouter();
 
-    const onGenerate = async() => {
+    const onGenerate = async(input) => {
         if (!userDetail?.name) {
             setOpenDialog(true);
             return;
@@ -31,7 +31,7 @@ function Hero() {
 
         const msg ={
             role: 'user',
-            content: userInput
+            content: input
         }
 
 
@@ -39,12 +39,11 @@ function Hero() {
 
         const workspaceId=await CreateWorkSpace({
             user:userDetail?._id,
-            message:[msg]
+            messages:[msg]
         })
         console.log(workspaceId)
-        router.push('/workspace/'+workspaceId) 
+        router.push('/workspace/'+workspaceId);
     }
-
     return (
         <div className="flex flex-col items-center justify-center mt-36 xl:mt-52 gap-2">
             <h2 className='font-bold text-4xl'>{Lookup.HERO_HEADING}</h2>
