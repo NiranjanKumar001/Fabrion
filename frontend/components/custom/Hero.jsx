@@ -6,6 +6,9 @@ import React, { useContext, useState } from 'react'
 import SignInDialog from './SignInDialog';
 import { MessagesContext } from '@/context/MessagesContext';
 import { UserDetailContext } from '@/context/UserDetailContext';
+import { useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import { useRouter } from 'next/navigation';
 
 function Hero() {
     const [userInput, setUserInput] = useState();
@@ -16,17 +19,31 @@ function Hero() {
 
     const [openDialog,setOpenDialog] =useState(false) ;
 
-    const onGenerate = () => {
+    const CreateWorkSpace =useMutation(api.workspace.CreateWorkspace);
+
+    const router =useRouter();
+
+    const onGenerate = async() => {
         if (!userDetail?.name) {
             setOpenDialog(true);
             return;
         }
-        setMessages({
+
+        const msg ={
             role: 'user',
             content: userInput
-        })
-    }
+        }
 
+
+        setMessages(msg);
+
+        const workspaceId=await CreateWorkSpace({
+            user:userDetail?._id,
+            message:[msg]
+        })
+        console.log(workspaceId)
+        router.push('/workspace/'+workspaceId) // routing created for the proper navigation in the page also the route is seperated for diff users using the workspace id
+    }
 
     return (
         <div className="flex flex-col items-center justify-center mt-36 xl:mt-52 gap-2">

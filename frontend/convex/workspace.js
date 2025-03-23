@@ -8,7 +8,7 @@ export const CreateWorkspace = mutation({
     },
     handler:async(ctx,args)=>{
         const workspaceId=await ctx.db.insert('workspace',{
-            messages:args.messages,
+            messages:args.message,
             user:args.user
         });
         return workspaceId;
