@@ -23,7 +23,7 @@ function Hero() {
         }
         setMessages({
             role: 'user',
-            content: input
+            content: userInput
         })
     }
 
