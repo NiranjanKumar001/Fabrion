@@ -15,6 +15,7 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "convex": "^1.21.0",
     "dedent": "^1.5.3",
     "lucide-react": "^0.483.0",
     "next": "15.2.3",

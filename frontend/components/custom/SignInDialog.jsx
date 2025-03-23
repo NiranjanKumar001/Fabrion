@@ -28,6 +28,8 @@ const googleLogin = useGoogleLogin({
   
       console.log(userInfo);
       setUserDetail(userInfo?.data)
+
+      //save this inside a database
       closeDialog(false);
     },
     onError: errorResponse => console.log(errorResponse),
