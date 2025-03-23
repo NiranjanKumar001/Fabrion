@@ -1,6 +1,8 @@
 import { defineSchema, defineTable } from "convex/server"; 
 import { v } from "convex/values";
 
+//needs debugging so check over here
+
 export default defineSchema({  
     users:defineTable({
         name:v.string(),
