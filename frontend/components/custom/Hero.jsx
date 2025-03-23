@@ -33,8 +33,6 @@ function Hero() {
             role: 'user',
             content: input
         }
-
-
         setMessages(msg);
 
         const workspaceId=await CreateWorkSpace({
