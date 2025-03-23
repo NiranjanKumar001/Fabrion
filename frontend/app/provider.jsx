@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { MessagesContext } from '@/context/MessagesContext'
 import { UserDetailContext } from '@/context/UserDetailContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 function Provider({ children }) {
     const [messages, setMessages] = useState();
     const [userDetail, setUserDetail] = useState();
