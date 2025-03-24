@@ -2,6 +2,7 @@
 import "./globals.css";
 import Provider from "./provider";
 import ConvexClientProvider from "./ConvexClientProvider";
+import Header from "@/components/custom/Header";
 
 export const metadata = {
   title: "Fabrion",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body>
         <ConvexClientProvider>
           <Provider>
+          <Header />
             {children}
           </Provider>
         </ConvexClientProvider>
