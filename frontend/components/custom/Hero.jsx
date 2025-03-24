@@ -39,7 +39,7 @@ function Hero() {
 
         const workspaceId=await CreateWorkSpace({
             user:userDetail?._id,
-            messages:[msg]
+            messages:msg
         })
         console.log(workspaceId)
         router.push('/workspace/'+workspaceId);
