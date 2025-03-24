@@ -16,18 +16,19 @@ function ChatView() {
 
     //   Used to Get workspace data from the workspace id
 
+    // console.log(messages)
     const GetWorkspaceData = async () => {
         const result = await convex.query(api.workspace.GetWorkspace, {
-            workspaceId: id,
+            workspaceId: id
         });
-        setMessages(result?.messages);
-        // console.log(messages)
+        setMessages(result.messages);
+        console.log(result)
     };
     return (
         <div>
             <div>
-                {messages.map((msg, index) => (
-                    <div key={index}>
+                {messages?.map((msg, index) => (
+                    <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2">
                         <h2>{msg.content}</h2>
                     </div>
                 ))}
