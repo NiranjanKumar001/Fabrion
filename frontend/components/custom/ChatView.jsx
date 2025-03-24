@@ -21,6 +21,7 @@ function ChatView() {
             workspaceId: id,
         });
         setMessages(result?.messages);
+        // console.log(messages)
     };
     return (
         <div>
