@@ -6,6 +6,7 @@ import { UserDetailContext } from '@/context/UserDetailContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import Header from '@/components/custom/Header';
 function Provider({ children }) {
     const [messages, setMessages] = useState();
     const [userDetail, setUserDetail] = useState();
@@ -37,7 +38,9 @@ function Provider({ children }) {
                             attribute="class"
                             defaultTheme="dark"
                             enableSystem
-                            disableTransitionOnChange>{children}</NextThemesProvider>
+                            disableTransitionOnChange>
+                                 <Header />
+                                {children}</NextThemesProvider>
                     </MessagesContext.Provider>
                 </UserDetailContext.Provider>
             </GoogleOAuthProvider>
