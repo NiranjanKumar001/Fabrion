@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import React, { useContext, useEffect } from "react";
 
 function ChatView() {
-    const { id } = useParams();
+    const { id } = useParams;
     const convex = useConvex();
     const { messages, setMessages } = useContext(MessagesContext);
 
@@ -27,6 +27,7 @@ function ChatView() {
     return (
         <div>
             <div>
+                {/* over here the map fnction not working because the data which it is fetching is not aRRay */}
                 {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2">
                         <h2>{msg.content}</h2>
