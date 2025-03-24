@@ -9,7 +9,6 @@ export const CreateUser = mutation({
     uid: v.string(),
   },
   handler: async (ctx, args) => {
-    //  here we will have all the condition that are there
 
     // user already exist
     const user = await ctx.db
