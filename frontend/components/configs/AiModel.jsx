@@ -1,3 +1,4 @@
+//copied from the guidde to install the gemini installation guide 
 const {
     GoogleGenerativeAI,
     HarmCategory,
