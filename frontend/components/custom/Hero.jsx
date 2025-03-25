@@ -35,8 +35,8 @@ function Hero() {
             role: 'user',
             content: input
         }
-        // setMessages(msg);
-        setMessages((prev) => Array.isArray(prev) ? [...prev, msg] : [msg]);
+        setMessages(msg);
+        // setMessages((prev) => Array.isArray(prev) ? [...prev, msg] : [msg]);
 
         const workspaceId=await CreateWorkSpace({
             user:userDetail._id,
