@@ -35,13 +35,15 @@ function Hero() {
             role: 'user',
             content: input
         }
-        setMessages(msg);
+        // setMessages(msg);
+        setMessages((prev) => Array.isArray(prev) ? [...prev, msg] : [msg]);
 
         const workspaceId=await CreateWorkSpace({
-            user:userDetail?._id,
-            messages:[msg] //made the message array sso that in future we have to map it so that it could be done properly
-        })
-        console.log(workspaceId)
+            user:userDetail._id,
+            messages:[msg]
+            //made the message array sso that in future we have to map it so that it could be done properly
+        }); 
+        // console.log(workspaceId)
         router.push('/workspace/'+workspaceId);
     }
     return (

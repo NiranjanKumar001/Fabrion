@@ -1,13 +1,13 @@
 "use client"
 import { MessagesContext } from "@/context/MessagesContext";
 import { api } from "@/convex/_generated/api";
+import Colors from "@/data/Colors";
 import { useConvex } from "convex/react";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect } from "react";
 
 function ChatView() {
-    // taking the id as same as the folder structure
-    const {id} = useParams(); 
+    const { id } = useParams();
     const convex = useConvex();
     const { messages, setMessages } = useContext(MessagesContext);
 
@@ -23,16 +23,17 @@ function ChatView() {
             workspaceId: id
         });
         setMessages(result?.messages);
-        console.log(result) //over here i am getting object instead of arrya so need to fix this error
+        console.log(result)
     };
     return (
         <div>
             <div>
-                {/* {messages?.map((msg, index) => (
+
+                {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2">
                         <h2>{msg.content}</h2>
                     </div>
-                ))} */}
+                ))}
             </div>
         </div>
     )
