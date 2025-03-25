@@ -47,7 +47,7 @@ function ChatView() {
 
     const GetAiResponse = async () => {
         setLoading(true);
-        
+
         const PROMPT = JSON.stringify(messages) + Prompt.CHAT_PROMPT;
         const result = await axios.post('/api/ai-chat', {
             prompt: PROMPT
