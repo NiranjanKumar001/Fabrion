@@ -6,11 +6,12 @@ import Colors from "@/data/Colors";
 import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
-import { useConvex } from "convex/react";
-import { ArrowRight, Link, Loader2Icon } from "lucide-react";
+import { useConvex, useMutation } from "convex/react";
+import { AirVent, ArrowRight, Link, Loader2Icon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
+import ReactMarkdown from 'react-markdown';
 
 function ChatView() {
     const { id } = useParams();
@@ -19,6 +20,7 @@ function ChatView() {
     const { userDetail, setuserDetails } = useContext(UserDetailContext)
     const [userInput, setUserInput] = useState();
     const [loading, setLoading] = useState(false);
+    const UpdateMessages = useMutation(api.workspace.UpdateMessages)
 
     useEffect(() => {
         id && GetWorkspaceData();
@@ -53,13 +55,27 @@ function ChatView() {
             prompt: PROMPT
         });
 
-        console.log(result.data.result);
+        // console.log(result.data.result);
 
-        setMessages(prev => [...prev, {
+        const aiResp = {
             role: "ai",
             content: result.data.result
-        }])
+        }
+
+        setMessages(prev => [...prev, aiResp])
+        await UpdateMessages({
+            messages: [...messages, aiResp],
+            workspaceId: id
+        })
         setLoading(false);
+    }
+
+    const onGenerate = (input) => {
+        setMessages(prev => [...prev, {
+            role: 'user',
+            content: input
+        }])
+        setUserInput('');
     }
 
 
@@ -67,14 +83,15 @@ function ChatView() {
         <div className="relative h-[85vh] flex flex-col">
             <div className="flex-1">
                 {messages?.map((msg, index) => (
-                    <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-start">
+                    <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7">
                         {msg?.role == 'user' &&
                             <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full' />}
-                        <h2>{msg.content}</h2>
+                        <div className='flex flex-col'><ReactMarkdown >{msg.content}</ReactMarkdown></div>
                     </div>
+                    // react markdown removed the classname feature so we need to wrap in a paretn and give it the style
                 ))}
                 {loading && <div className="p-3 rounded-lg mb-2 flex gap-2 items-start"
-                style={{backgroundColor:Colors.CHAT_BACKGROUND}}>
+                    style={{ backgroundColor: Colors.CHAT_BACKGROUND }}>
                     <Loader2Icon className="animate-spin" />
                     <h2>Generating response...</h2>
                 </div>}
@@ -85,6 +102,7 @@ function ChatView() {
             }}>
                 <div className='flex gap-2 overflow-y-scroll'>
                     <textarea placeholder={Lookup.INPUT_PLACEHOLDER}
+                        value={userInput}
                         onChange={(event) => setUserInput(event.target.value)}
                         className='outline-none bg-transparent w-full h-32 max-h-56 resize-none' />
                     {userInput && <ArrowRight
