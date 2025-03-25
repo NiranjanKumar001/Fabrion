@@ -14,6 +14,7 @@ export const CreateWorkspace = mutation({
         return workspaceId;
     }
 });
+
 export const GetWorkspace = query({
     args:{
         workspaceId:v.id('workspace')
