@@ -15,7 +15,7 @@ const model = genAI.getGenerativeModel({
 });
 
 const generationConfig = {
-    temperature: 1,
+    temperature: 0,
     topP: 0.95,
     topK: 40,
     maxOutputTokens: 8192,
@@ -30,6 +30,8 @@ export const chatSession = model.startChat({
     history: [
     ],
 });
+
+//not required for now but if required we will see.
 
 // const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
 // // TODO: Following code needs to be updated for client-side apps.
