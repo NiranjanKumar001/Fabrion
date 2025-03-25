@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "uuid4": "^2.0.3"
   }
 }

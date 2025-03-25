@@ -14,8 +14,8 @@ function ChatView() {
     const { id } = useParams();
     const convex = useConvex();
     const { messages, setMessages } = useContext(MessagesContext);
-    const {userDetail,setuserDetails}=useContext(UserDetailContext)
-    const [userInput ,setUserInput]=useState();
+    const { userDetail, setuserDetails } = useContext(UserDetailContext)
+    const [userInput, setUserInput] = useState();
 
     useEffect(() => {
         id && GetWorkspaceData();
@@ -31,14 +31,16 @@ function ChatView() {
         setMessages(result?.messages);
         // console.log(result)
     };
-    return (
-        <div>
-            <div>
 
+   
+
+    return (
+        <div className="relative h-[85vh] flex flex-col">
+            <div className="flex-1">
                 {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-start">
-                        {msg?.role=='user'&&
-                        <Image src={userDetail?.picture}  alt='userImage' width={35} height={35} className='rounded-full'/>}
+                        {msg?.role == 'user' &&
+                            <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full' />}
                         <h2>{msg.content}</h2>
                     </div>
                 ))}
@@ -47,7 +49,7 @@ function ChatView() {
             <div className='p-5 border rounded-xl max-w-2xl w-full mt-3' style={{
                 backgroundColor: Colors.BACKGROUND
             }}>
-                <div className='flex gap-2'>
+                <div className='flex gap-2 overflow-y-scroll'>
                     <textarea placeholder={Lookup.INPUT_PLACEHOLDER}
                         onChange={(event) => setUserInput(event.target.value)}
                         className='outline-none bg-transparent w-full h-32 max-h-56 resize-none' />
