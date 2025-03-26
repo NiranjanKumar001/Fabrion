@@ -7,7 +7,7 @@ import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
-import { AirVent, ArrowRight, Link, Loader2Icon } from "lucide-react";
+import { ArrowRight, Link, Loader2Icon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
