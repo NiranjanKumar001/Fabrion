@@ -88,7 +88,7 @@ function ChatView() {
                             <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full' />}
                         <div className='flex flex-col'><ReactMarkdown >{msg.content}</ReactMarkdown></div>
                     </div>
-                    // react markdown removed the classname feature so we need to wrap in a paretn and give it the style
+                    // react markdown (removed the classname feature in the latest update) so we need to wrap in a paretn and give it the style
                 ))}
                 {loading && <div className="p-3 rounded-lg mb-2 flex gap-2 items-start"
                     style={{ backgroundColor: Colors.CHAT_BACKGROUND }}>
@@ -96,7 +96,7 @@ function ChatView() {
                     <h2>Generating response...</h2>
                 </div>}
             </div>
-            {/* Input section */}
+
             <div className='p-5 border rounded-xl max-w-2xl w-full mt-3' style={{
                 backgroundColor: Colors.BACKGROUND
             }}>
