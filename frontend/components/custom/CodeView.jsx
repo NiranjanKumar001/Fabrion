@@ -1,6 +1,8 @@
 "use client";
 
+import { MessagesContext } from "@/context/MessagesContext";
 import Lookup from "@/data/Lookup";
+import Prompt from "@/data/Prompt";
 import {
   SandpackProvider,
   SandpackLayout,
@@ -8,11 +10,36 @@ import {
   SandpackPreview,
   SandpackFileExplorer,
 } from "@codesandbox/sandpack-react";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 
 function CodeView() {
   const [activeTab, setActiveTab] = useState("code");
-  const [files,setFiles]=useState(Lookup?.DEFAULT_FILE);
+  const [files, setFiles] = useState(Lookup?.DEFAULT_FILE);
+
+  const {messages, setMessages} = useContext(MessagesContext)
+
+
+  useEffect(() => {
+    if (messages?.length > 0) {
+      const role = messages[messages?.length - 1].role;
+      if (role == 'user') {
+        GenerateAiCode();
+      }
+    }
+  }, [messages])
+
+  const GenerateAiCode = async () => {
+    const PROMPT = messages[messages?.length - 1]?.content + " " + Prompt.CODE_GEN_PROMPT;
+    const result = await axios.post('/api/gen-ai-code', {
+      prompt: PROMPT
+    });
+    console.log(result.data);
+    const aiResp = result.data;
+
+    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...aiResp?.files }
+    setFiles(mergedFiles);
+  }
 
   return (
     <div>
@@ -33,16 +60,16 @@ function CodeView() {
         </div>
       </div>
       <SandpackProvider template="react" theme={"dark"}
-      customSetup={{
-        dependencies:{
-          ...Lookup.DEPENDANCY
-        }
-      }}
-      files={files}
-      options={{
-        externalResources:['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4']
-        // to work with the tailwind in the code editoe in the webpage so we used cdn 
-      }}
+        customSetup={{
+          dependencies: {
+            ...Lookup.DEPENDANCY
+          }
+        }}
+        files={files}
+        options={{
+          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4']
+          // to work with the tailwind in the code editoe in the webpage so we used cdn 
+        }}
       >
         <SandpackLayout>
           {/* active tab is set to the code tab  */}

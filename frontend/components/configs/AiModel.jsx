@@ -24,12 +24,30 @@ const generationConfig = {
     responseMimeType: "text/plain",
 };
 
+const CodeGenerationConfig = {
+    temperature: 0.3,
+    topP: 0.85,
+    topK: 50,
+    maxOutputTokens: 8192,
+    responseModalities: [
+    ],
+    responseMimeType: "application/json",
+};
+
 
 export const chatSession = model.startChat({
+    
     generationConfig,
     history: [
     ],
 });
+
+
+export const GenAiCode=model.startChat({
+    generationConfig:CodeGenerationConfig,
+    history: [
+    ],
+})
 
 //not required for now but if required we will see.
 
