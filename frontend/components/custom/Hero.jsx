@@ -57,7 +57,7 @@ function Hero() {
                 <div className='flex gap-2'>
                     <textarea placeholder={Lookup.INPUT_PLACEHOLDER}
                         onChange={(event) => setUserInput(event.target.value)}
-                        className='outline-none bg-transparent w-full h-32 max-h-56 resize-none' />
+                        className='outline-none bg-transparent w-full h-32 max-h-56 resize-none ' />
                     {userInput && <ArrowRight
                         onClick={() => onGenerate(userInput)}
                         className='bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer' />}

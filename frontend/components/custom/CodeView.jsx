@@ -40,7 +40,7 @@ function CodeView() {
             </>
           ) : (
             <>
-              <SandpackPreview style={{ height: "80vh" }} />
+              <SandpackPreview style={{ height: "80vh" }} showNavigator={true} />
             </>
           )}
         </SandpackLayout>
