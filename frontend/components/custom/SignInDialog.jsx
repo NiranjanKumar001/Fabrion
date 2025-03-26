@@ -77,4 +77,4 @@ function SignInDialog({ openDialog, closeDialog }) {
     )
 }
 
-export default SignInDialog
+export default SignInDialog;
