@@ -98,9 +98,7 @@ function ChatView() {
                     <Loader2Icon className="animate-spin" />
                     <h2>Generating response...</h2>
                 </div>}
-                
             </div>
-
             <div className='p-5 border rounded-xl max-w-2xl w-full mt-3 ' style={{
                 backgroundColor: Colors.BACKGROUND
             }}>

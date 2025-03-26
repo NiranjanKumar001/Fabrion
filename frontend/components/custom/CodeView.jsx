@@ -1,5 +1,6 @@
 "use client";
 
+import Lookup from "@/data/Lookup";
 import {
   SandpackProvider,
   SandpackLayout,
@@ -11,6 +12,7 @@ import React, { useState } from "react";
 
 function CodeView() {
   const [activeTab, setActiveTab] = useState("code");
+  const [files,setFiles]=useState(Lookup?.DEFAULT_FILE);
 
   return (
     <div>
@@ -30,7 +32,18 @@ function CodeView() {
           </h2>
         </div>
       </div>
-      <SandpackProvider template="react" theme={"dark"}>
+      <SandpackProvider template="react" theme={"dark"}
+      customSetup={{
+        dependencies:{
+          ...Lookup.DEPENDANCY
+        }
+      }}
+      files={files}
+      options={{
+        externalResources:['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4']
+        // to work with the tailwind in the code editoe in the webpage so we used cdn 
+      }}
+      >
         <SandpackLayout>
           {/* active tab is set to the code tab  */}
           {activeTab == "code" ? (
