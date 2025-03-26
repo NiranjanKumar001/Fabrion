@@ -41,7 +41,8 @@ function Hero() {
         const workspaceId=await CreateWorkSpace({
             user:userDetail._id,
             messages:[msg]
-            //made the message array sso that in future we have to map it so that it could be done properly
+            //made the message in array sso that in future we have to map it so that it could be done properly
+            //.map only supports array or valid data.
         }); 
         // console.log(workspaceId)
         router.push('/workspace/'+workspaceId);

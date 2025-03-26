@@ -18,9 +18,14 @@ import uuid4 from "uuid4";
 
 function SignInDialog({ openDialog, closeDialog }) {
 
-    const { userDetail, setUserDetail } = useContext(UserDetailContext);
+    const { userDetail, setUserDetail } = useContext(UserDetailContext); //no props drillling required to access value over here
     const CreateUser = useMutation(api.users.CreateUser);
 
+
+// useMutation helps with:
+// Sending API requests (POST, PUT, DELETE)
+//  Handling loading, error, and success states
+//  Automatically retrying failed requests
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
@@ -29,6 +34,7 @@ function SignInDialog({ openDialog, closeDialog }) {
                 'https://www.googleapis.com/oauth2/v3/userinfo',
                 { headers: { Authorization: 'Bearer ' + tokenResponse?.access_token } },
             );
+
 
             console.log(userInfo);
             const user = userInfo.data;
