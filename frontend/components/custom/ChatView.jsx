@@ -7,7 +7,7 @@ import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
-import { ArrowRight, Link, Loader2Icon } from "lucide-react";
+import { ArrowRight, BotIcon, Link, Loader2Icon } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -82,20 +82,23 @@ function ChatView() {
 
     return (
         <div className="relative h-[85vh] flex flex-col">
-            <div className="flex-1 overflow-y-scroll no-scrollbar">
+            <div className="flex-1 overflow-y-scroll no-scrollbar gap-3">
                 {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7">
                         {msg?.role == 'user' &&
                             <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full' />}
+                        {msg?.role == 'ai' &&
+                            <Image src='/logo.png' alt='AiImage' width={35} height={35} className='rounded-full self-start' />}
                         <div className='flex flex-col'><ReactMarkdown >{msg.content}</ReactMarkdown></div>
                     </div>
                     // react markdown (removed the classname feature in the latest update) so we need to wrap in a paretn and give it the style
                 ))}
-                {loading && <div className="p-3 rounded-lg mb-2 flex gap-2 items-start"
+                {loading &&  <div className="p-3 rounded-lg mb-2 flex gap-2 items-start"
                     style={{ backgroundColor: Colors.CHAT_BACKGROUND }}>
                     <Loader2Icon className="animate-spin" />
                     <h2>Generating response...</h2>
                 </div>}
+                
             </div>
 
             <div className='p-5 border rounded-xl max-w-2xl w-full mt-3 ' style={{
