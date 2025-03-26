@@ -82,7 +82,7 @@ function ChatView() {
 
     return (
         <div className="relative h-[85vh] flex flex-col">
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-scroll no-scrollbar">
                 {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7">
                         {msg?.role == 'user' &&
@@ -98,14 +98,14 @@ function ChatView() {
                 </div>}
             </div>
 
-            <div className='p-5 border rounded-xl max-w-2xl w-full mt-3' style={{
+            <div className='p-5 border rounded-xl max-w-2xl w-full mt-3 ' style={{
                 backgroundColor: Colors.BACKGROUND
             }}>
-                <div className='flex gap-2 overflow-y-scroll'>
+                <div className='flex gap-2'>
                     <textarea placeholder={Lookup.INPUT_PLACEHOLDER}
                         value={userInput}
                         onChange={(event) => setUserInput(event.target.value)}
-                        className='outline-none bg-transparent w-full h-32 max-h-56 resize-none' />
+                        className='outline-none bg-transparent w-full h-32 max-h-56 resize-none ' />
                     {userInput && <ArrowRight
                         onClick={() => onGenerate(userInput)}
                         className='bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer' />}
