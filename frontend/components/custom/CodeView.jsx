@@ -70,7 +70,8 @@ function CodeView() {
           externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',//taulwind cdn
             'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js',//gsap cdn 
             "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",// three js cdn for the dependencies to woek
-            "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/", //three js cdn for the dependencies to work
+            "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+             //three js cdn for the dependencies to work
           ]
           // to work with the tailwind in the code editoe in the webpage so we used cdn 
         }}
