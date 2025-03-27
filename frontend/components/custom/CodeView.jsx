@@ -67,7 +67,9 @@ function CodeView() {
         }}
         files={files}
         options={{
-          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4']
+          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+            'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js'
+          ]
           // to work with the tailwind in the code editoe in the webpage so we used cdn 
         }}
       >
