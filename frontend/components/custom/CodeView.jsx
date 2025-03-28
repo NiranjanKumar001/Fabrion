@@ -122,6 +122,8 @@ function CodeView() {
           )}
         </SandpackLayout>
       </SandpackProvider>
+      
+      {/* loader for the better ui */}
       {loading&&<div className="p-10 bg-gray-900 opacity-80 absolute top-0 rounded-lg w-full h-full flex items-center justify-center">
         <Loader2Icon className=" animate-spin h-10 w-10 text-white"/>
         <h2 className="text-white">Generating your files...</h2>
