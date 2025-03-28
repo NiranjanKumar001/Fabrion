@@ -29,9 +29,9 @@ function WorkspaceHistory() {
         <div>
             <h2 className='font-medium text-lg'>Your Chats</h2>
             <div>
-                {workspaceList && workspaceList?.map((workspace, index) => (
-                    <Link href={'/workspace/'+workspace?._id}>
-                    <h2 onClick={toggleSidebar} className='text-sm text-gray-400 mt-2 font-light hover:text-white cursor-pointer' key={index}>{workspace?.messages[0]?.content}
+                {workspaceList && workspaceList?.map((workspace,index) => (
+                    <Link href={'/workspace/'+workspace?._id} key={index}>
+                    <h2 onClick={toggleSidebar} className='text-sm text-gray-400 mt-2 font-light hover:text-white cursor-pointer' >{workspace?.messages[0]?.content}
                     </h2>
                     </Link>
                 ))}
