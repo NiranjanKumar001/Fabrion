@@ -7,6 +7,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import Header from '@/components/custom/Header';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/custom/AppSideBar';
 function Provider({ children }) {
     const [messages, setMessages] = useState();
     const [userDetail, setUserDetail] = useState();
@@ -40,7 +42,11 @@ function Provider({ children }) {
                             enableSystem
                             disableTransitionOnChange>
                                  <Header />
-                                {children}</NextThemesProvider>
+                                 <SidebarProvider>
+                                    <AppSidebar/>
+                                {children}
+                                </SidebarProvider>
+                                </NextThemesProvider>
                     </MessagesContext.Provider>
                 </UserDetailContext.Provider>
             </GoogleOAuthProvider>
