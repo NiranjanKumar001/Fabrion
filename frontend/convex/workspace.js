@@ -15,16 +15,17 @@ export const CreateWorkspace = mutation({
     }
 });
 
-export const GetWorkspace = query({
-    args:{
-        workspaceId:v.id('workspace')
-    },
-    handler:async(ctx,args)=>{
-        const result=await ctx.db.get(args.workspaceId);
-        return result;
-    }
-})
-
+// //for fetching
+// export const GetWorkspace = query({
+//     args:{
+//         workspaceId:v.id('workspace')
+//     },
+//     handler:async(ctx,args)=>{
+//         const result=await ctx.db.get(args.workspaceId);
+//         return result;
+//     }
+// })
+//for updating
 export const UpdateMessages=mutation({
     args:{
         workspaceId:v.id('workspace'),
@@ -37,6 +38,7 @@ export const UpdateMessages=mutation({
         return result
     }
 })
+//for updating
 export const UpdateFiles=mutation({
     args:{
         workspaceId:v.id('workspace'),
@@ -47,5 +49,15 @@ export const UpdateFiles=mutation({
             fileData:args.files
         });
         return result
+    }
+})
+//for fetching
+export const GetWorkspace = query({
+    args:{
+        workspaceId:v.id('workspace')
+    },
+    handler:async(ctx,args)=>{
+        const result=await ctx.db.get(args.workspaceId);
+        return result;
     }
 })
