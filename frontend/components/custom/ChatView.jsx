@@ -86,7 +86,7 @@ function ChatView() {
                 {messages?.map((msg, index) => (
                     <div key={index} style={{ backgroundColor: Colors.CHAT_BACKGROUND }} className="p-3 rounded-lg mb-2 flex gap-2 items-center leading-7">
                         {msg?.role == 'user' &&
-                            <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full' />}
+                            <Image src={userDetail?.picture} alt='userImage' width={35} height={35} className='rounded-full self-start' />}
                         {msg?.role == 'ai' &&
                             <Image src='/logo.png' alt='AiImage' width={35} height={35} className='rounded-full self-start' />}
                         <div className='flex flex-col'><ReactMarkdown >{msg.content}</ReactMarkdown></div>
