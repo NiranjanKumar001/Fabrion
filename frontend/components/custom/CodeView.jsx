@@ -1,6 +1,7 @@
 "use client";
 
 import { MessagesContext } from "@/context/MessagesContext";
+import { api } from "@/convex/_generated/api";
 import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import {
@@ -11,13 +12,19 @@ import {
   SandpackFileExplorer,
 } from "@codesandbox/sandpack-react";
 import axios from "axios";
+import { useMutation } from "convex/react";
+import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
 function CodeView() {
   const [activeTab, setActiveTab] = useState("code");
   const [files, setFiles] = useState(Lookup?.DEFAULT_FILE);
 
-  const {messages, setMessages} = useContext(MessagesContext)
+  const {messages, setMessages} = useContext(MessagesContext);
+
+  const UpdateFiles=useMutation(api.workspace.UpdateFiles);
+
+  const {id}=useParams();
 
 
   useEffect(() => {
@@ -39,6 +46,10 @@ function CodeView() {
 
     const mergedFiles = { ...Lookup.DEFAULT_FILE, ...aiResp?.files }
     setFiles(mergedFiles);
+    await UpdateFiles({
+      workspaceId:id,
+      files:aiResp?.files
+    });
   }
 
   return (
