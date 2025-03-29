@@ -13,19 +13,19 @@ import SideBarFooter from "./SidebarFooter"
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className='no-scrollbar'>
       <SidebarHeader className="p-5">
         <Image src={'/logo.png'} alt='logo' width={30} height={30} />
+      <Button className='mt-5'><MessageCircleCode />Start New Chat</Button>
       </SidebarHeader>
-      <SidebarContent className='p-5'>
-        <Button><MessageCircleCode />Start New Chat</Button>
+      <SidebarContent className='p-5 no-scrollbar'>
         <SidebarGroup />
         <SidebarGroup>
           <WorkspaceHistory />
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SideBarFooter/> 
+        <SideBarFooter/>
         {/* component */}
       </SidebarFooter>
     </Sidebar>

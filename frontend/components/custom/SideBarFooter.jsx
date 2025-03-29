@@ -18,7 +18,7 @@ function SideBarFooter() {
           variant="ghost"
           className="w-full flex space-x-3 "
         >
-          <option.icon className="w-5 h-5" /> {/* Ensure icon renders properly */}
+          <option.icon className="w-5 h-5" />
           <span className="text-left">{option.name}</span>
         </Button>
       ))}
