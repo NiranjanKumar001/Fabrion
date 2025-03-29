@@ -9,6 +9,7 @@ import Image from "next/image"
 import { Button } from "../ui/button"
 import { MessageCircleCode } from "lucide-react"
 import WorkspaceHistory from "./WorkspaceHistory"
+import SideBarFooter from "./SidebarFooter"
 
 export function AppSidebar() {
   return (
@@ -17,13 +18,15 @@ export function AppSidebar() {
         <Image src={'/logo.png'} alt='logo' width={30} height={30} />
       </SidebarHeader>
       <SidebarContent className='p-5'>
-        <Button><MessageCircleCode/>Start New Chat</Button>
+        <Button><MessageCircleCode />Start New Chat</Button>
         <SidebarGroup />
         <SidebarGroup>
-          <WorkspaceHistory/>
+          <WorkspaceHistory />
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SideBarFooter/>
+      </SidebarFooter>
     </Sidebar>
   )
 }
