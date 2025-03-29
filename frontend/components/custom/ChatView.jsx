@@ -125,8 +125,7 @@ function ChatView() {
         )}
       </div>
 
-      <div className="flex col-span-2">
-        <div className=" flex gap-2 items-end">
+      <div className=" flex gap-2 items-end">
           {userDetail && (
             <Image
               className="rounded-full cursor-pointer "
@@ -137,8 +136,7 @@ function ChatView() {
               height={30}
             />
           )}
-        </div>
-
+    
         <div
           className="p-5 border rounded-xl max-w-2xl w-full mt-3 "
           style={{

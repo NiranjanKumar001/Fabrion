@@ -16,7 +16,6 @@ export function AppSidebar() {
       <SidebarHeader className="p-5">
         <Image src={'/logo.png'} alt='logo' width={30} height={30} />
       </SidebarHeader>
-
       <SidebarContent className='p-5'>
         <Button><MessageCircleCode/>Start New Chat</Button>
         <SidebarGroup />
