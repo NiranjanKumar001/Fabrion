@@ -11,7 +11,7 @@ function Header() {
 
 
     return (
-        <div className='p-4 flex justify-between items-center'>
+        <div className='p-4 flex justify-between'>
             <Image src="/logo.png" alt="logo" width={40} height={40} />
             {!userDetail ? (
                     <>
