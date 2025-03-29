@@ -9,7 +9,7 @@ import Image from "next/image"
 import { Button } from "../ui/button"
 import { MessageCircleCode } from "lucide-react"
 import WorkspaceHistory from "./WorkspaceHistory"
-import SideBarFooter from "./SidebarFooter"
+import SideBar_Footer from "./SideBar_Footer"
 
 export function AppSidebar() {
   return (
@@ -25,7 +25,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SideBarFooter/>
+        <SideBar_Footer/>
         {/* component */}
       </SidebarFooter>
     </Sidebar>
