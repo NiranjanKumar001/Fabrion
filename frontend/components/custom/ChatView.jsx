@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useSidebar } from "../ui/sidebar";
 
 function ChatView() {
   const { id } = useParams();
@@ -21,7 +22,7 @@ function ChatView() {
   const [userInput, setUserInput] = useState();
   const [loading, setLoading] = useState(false);
   const UpdateMessages = useMutation(api.workspace.UpdateMessages);
-  const { toggleSidebar } = useState();
+  const { toggleSidebar } = useSidebar();
 
   useEffect(() => {
     id && GetWorkspaceData();
@@ -128,7 +129,7 @@ function ChatView() {
       <div className=" flex gap-2 items-end">
           {userDetail && (
             <Image
-              className="rounded-full cursor-pointer "
+              className="rounded-full cursor-pointer m-2"
               onClick={toggleSidebar}
               src={userDetail?.picture}
               alt="user"
