@@ -44,6 +44,12 @@ function Hero() {
             //made the message in array sso that in future we have to map it so that it could be done properly
             //.map only supports array or valid data.
         }); 
+
+        if (!userDetail || !userDetail._id) {
+            console.error("User detail is missing or invalid:", userDetail);
+            return;
+        }
+        
         // console.log(workspaceId)
         router.push('/workspace/'+workspaceId);
     }

@@ -29,14 +29,14 @@ function SignInDialog({ openDialog, closeDialog }) {
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
-            console.log(tokenResponse);
+            // console.log(tokenResponse);
             const userInfo = await axios.get(
                 'https://www.googleapis.com/oauth2/v3/userinfo',
                 { headers: { Authorization: 'Bearer ' + tokenResponse?.access_token } },
             );
 
 
-            console.log(userInfo);
+            // console.log(userInfo);
             const user = userInfo.data;
 
             await CreateUser({
