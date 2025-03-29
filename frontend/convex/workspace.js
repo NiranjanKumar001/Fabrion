@@ -65,7 +65,6 @@ export const GetWorkspace = query({
 export const GetAllWorkspace=query({
     args:{
         userId:v.id('users')
-
     },
     handler:async(ctx,args)=>{
         const result=await ctx.db.query('workspace')

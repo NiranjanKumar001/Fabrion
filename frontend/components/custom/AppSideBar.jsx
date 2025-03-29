@@ -1,7 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  SidebarFooter,//ui
   SidebarGroup,
   SidebarHeader,
 } from "@/components/ui/sidebar"
@@ -25,7 +25,8 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SideBarFooter/>
+        <SideBarFooter/> 
+        {/* component */}
       </SidebarFooter>
     </Sidebar>
   )
