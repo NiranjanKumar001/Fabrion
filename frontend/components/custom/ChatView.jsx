@@ -85,7 +85,7 @@ function ChatView() {
   return (
     <div className="relative h-[85vh] flex flex-col">
       <div className="flex-1 overflow-y-scroll no-scrollbar pl-5">
-        {messages?.map((msg, index) => (
+        {messages && Array.isArray(messages) && messages.map((msg, index) => (
           <div
             key={index}
             style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
