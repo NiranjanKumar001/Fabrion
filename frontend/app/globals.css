@@ -156,3 +156,19 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+.cm-scroller::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.cm-scroller {
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.sp-tabs-scrollable-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.sp-tabs-scrollable-container {
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
