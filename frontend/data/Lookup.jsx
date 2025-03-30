@@ -106,6 +106,4 @@ export default config;
       price: 49.99
     }
   ]
-
-
 }
