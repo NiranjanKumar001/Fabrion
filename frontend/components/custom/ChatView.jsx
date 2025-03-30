@@ -7,7 +7,7 @@ import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
-import { ArrowRight, BotIcon, Link, Loader2Icon } from "lucide-react";
+import { ArrowRight, BotIcon, Link, Loader2Icon, PanelRightDashed } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -128,7 +128,7 @@ function ChatView() {
       </div>
       {/* sidebar button */}
       <div className="flex gap-2 items-end">
-        {userDetail && (
+        {/* {userDetail && (
           <Image
             onClick={() =>
               document.dispatchEvent(new CustomEvent("toggle-sidebar"))
@@ -139,7 +139,18 @@ function ChatView() {
             width={30}
             height={30}
           />
+        )} */}
+        {userDetail && (
+          <PanelRightDashed  onClick={() =>
+            document.dispatchEvent(new CustomEvent("toggle-sidebar"))
+          }
+          className="rounded-full cursor-pointer m-2"
+          src={userDetail?.picture}
+          alt="user"
+          width={30}
+          height={30}/>
         )}
+        
 
         <div
           className="p-5 border rounded-xl max-w-2xl w-full mt-3 "
