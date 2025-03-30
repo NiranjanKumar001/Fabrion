@@ -1,43 +1,50 @@
-"use client"
-import { UserDetailContext } from '@/context/UserDetailContext'
-import { api } from '@/convex/_generated/api';
-import { useConvex } from 'convex/react';
-import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react'
-import { useSidebar } from '../ui/sidebar';
+"use client";
+import { UserDetailContext } from "@/context/UserDetailContext";
+import { api } from "@/convex/_generated/api";
+import { useConvex } from "convex/react";
+import Link from "next/link";
+import React, { useContext, useEffect, useState } from "react";
 
 function WorkspaceHistory() {
-    const { userDetail, setUserDetail } = useContext(UserDetailContext);
-    const convex = useConvex();
-    const [workspaceList, setWorkspaceList] = useState();
-    const {toggleSidebar}=useSidebar();
+  const { userDetail } = useContext(UserDetailContext);
+  const convex = useConvex();
+  const [workspaceList, setWorkspaceList] = useState([]);
 
-
-    useEffect(() => {
-        userDetail && GetAllWorkspace();
-    }, [userDetail])
-
-    const GetAllWorkspace = async () => {
-        const result = await convex.query(api.workspace.GetAllWorkspace, {
-            userId: userDetail?._id
-        })
-        setWorkspaceList(result);
-        // console.log(result);
+  useEffect(() => {
+    if (userDetail) {
+      GetAllWorkspace();
     }
+  }, [userDetail]);
 
-    return (
-        <div>
-            <h2 className='font-medium text-lg'>Your Chats</h2>
-            <div>
-                {workspaceList && workspaceList?.map((workspace,index) => (
-                    <Link href={'/workspace/'+workspace?._id} key={index}>
-                    <h2 onClick={toggleSidebar} className='text-sm text-gray-400 mt-2 font-light hover:text-white cursor-pointer' >{workspace?.messages[0]?.content}
-                    </h2>
-                    </Link>
-                ))}
-            </div>
-        </div>
-    )
+  const GetAllWorkspace = async () => {
+    try {
+      const result = await convex.query(api.workspace.GetAllWorkspace, {
+        userId: userDetail?._id,
+      });
+      setWorkspaceList(result || []);
+    } catch (error) {
+      console.error("Error fetching workspace history:", error);
+    }
+  };
+
+  return (
+    <div>
+      <h2 className="font-medium text-lg text-white">Your Chats</h2>
+      <div className="mt-2">
+        {workspaceList.length > 0 ? (
+          workspaceList.map((workspace, index) => (
+            <Link href={`/workspace/${workspace?._id}`} key={index}>
+              <h2 className="text-sm text-gray-400 font-light hover:text-white cursor-pointer">
+                {workspace?.messages?.[0]?.content || "No messages"}
+              </h2>
+            </Link>
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No workspaces found.</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default WorkspaceHistory
+export default WorkspaceHistory;

@@ -12,7 +12,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { useSidebar } from "../ui/sidebar";
+// import { Menu } from 'lucide-react';
 
 function ChatView() {
   const { id } = useParams();
@@ -22,7 +22,6 @@ function ChatView() {
   const [userInput, setUserInput] = useState();
   const [loading, setLoading] = useState(false);
   const UpdateMessages = useMutation(api.workspace.UpdateMessages);
-  const { toggleSidebar } = useSidebar();
 
   useEffect(() => {
     id && GetWorkspaceData();
@@ -85,36 +84,38 @@ function ChatView() {
   return (
     <div className="relative h-[85vh] flex flex-col">
       <div className="flex-1 overflow-y-scroll no-scrollbar pl-5">
-      {messages && Array.isArray(messages) && messages.map((msg, index) => (
-          <div
-            key={index}
-            style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
-            className="p-3 rounded-lg mb-4 flex gap-2 items-center leading-7"
-          >
-            {msg?.role == "user" && (
-              <Image
-                src={userDetail?.picture}
-                alt="userImage"
-                width={35}
-                height={35}
-                className="rounded-full self-start"
-              />
-            )}
-            {msg?.role == "ai" && (
-              <Image
-                src="/logo.png"
-                alt="AiImage"
-                width={35}
-                height={35}
-                className="rounded-full self-start"
-              />
-            )}
-            <div className="flex flex-col">
-              <ReactMarkdown>{msg.content}</ReactMarkdown>
+        {messages &&
+          Array.isArray(messages) &&
+          messages.map((msg, index) => (
+            <div
+              key={index}
+              style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
+              className="p-3 rounded-lg mb-4 flex gap-2 items-center leading-7"
+            >
+              {msg?.role == "user" && (
+                <Image
+                  src={userDetail?.picture}
+                  alt="userImage"
+                  width={35}
+                  height={35}
+                  className="rounded-full self-start"
+                />
+              )}
+              {msg?.role == "ai" && (
+                <Image
+                  src="/logo.png"
+                  alt="AiImage"
+                  width={35}
+                  height={35}
+                  className="rounded-full self-start"
+                />
+              )}
+              <div className="flex flex-col">
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              </div>
             </div>
-          </div>
-          // react markdown (removed the classname feature in the latest update) so we need to wrap in a paretn and give it the style
-        ))}
+            // react markdown (removed the classname feature in the latest update) so we need to wrap in a paretn and give it the style
+          ))}
         {loading && (
           <div
             className="p-5 rounded-lg mb-2 flex gap-2 items-center"
@@ -125,19 +126,21 @@ function ChatView() {
           </div>
         )}
       </div>
+      {/* sidebar button */}
+      <div className="flex gap-2 items-end">
+        {userDetail && (
+          <Image
+            onClick={() =>
+              document.dispatchEvent(new CustomEvent("toggle-sidebar"))
+            }
+            className="rounded-full cursor-pointer m-2"
+            src={userDetail?.picture}
+            alt="user"
+            width={30}
+            height={30}
+          />
+        )}
 
-      <div className=" flex gap-2 items-end">
-          {userDetail && (
-            <Image
-              className="rounded-full cursor-pointer m-2"
-              onClick={toggleSidebar}
-              src={userDetail?.picture}
-              alt="user"
-              width={30}
-              height={30}
-            />
-          )}
-    
         <div
           className="p-5 border rounded-xl max-w-2xl w-full mt-3 "
           style={{
