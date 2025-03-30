@@ -92,7 +92,7 @@ function ChatView() {
               style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
               className="p-3 rounded-lg mb-4 flex gap-2 items-center leading-7"
             >
-              {msg?.role == "user" && (
+              {userDetail?.picture  && (
                 <Image
                   src={userDetail?.picture}
                   alt="userImage"

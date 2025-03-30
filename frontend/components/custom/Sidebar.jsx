@@ -1,8 +1,24 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
+import { useRouter } from "next/navigation";
 import WorkspaceHistory from "@/components/custom/WorkspaceHistory";
+import { UserDetailContext } from "@/context/UserDetailContext";
 
 const Sidebar = ({ isOpen, onClose }) => {
+  const { setUserDetail } = useContext(UserDetailContext);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // ✅ Clear user data from local storage
+    localStorage.removeItem("user");
+
+    // ✅ Reset user state
+    setUserDetail(null);
+
+    // ✅ Redirect to login page
+    router.push("/");
+  };
+
   return (
     <>
       {/* Sidebar */}
@@ -31,6 +47,14 @@ const Sidebar = ({ isOpen, onClose }) => {
               Settings
             </li>
           </ul>
+
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="mt-auto bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Logout
+          </button>
         </div>
       </div>
 
