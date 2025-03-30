@@ -24,7 +24,7 @@ function Hero() {
     // Add an effect to check if user data is ready
     useEffect(() => {
         if (userDetail && userDetail._id) {
-            console.log("User detail loaded:", userDetail);
+            console.log("User detail loaded");
             setIsUserReady(true);
         } else {
             console.log("Waiting for user detail...");
@@ -33,12 +33,12 @@ function Hero() {
     }, [userDetail]);
  
     const onGenerate = async(input) => { 
-        console.log("onGenerate called with input:", input);
-        console.log("Current userDetail:", userDetail);
+        // console.log("onGenerate called with input:", input);
+        // console.log("Current userDetail:", userDetail);
         
         // First check if user is logged in
         if (!userDetail?.name) { 
-            console.log("No user name found, opening dialog");
+            // console.log("No user name found, opening dialog");
             setOpenDialog(true); 
             return; 
         } 
@@ -51,7 +51,7 @@ function Hero() {
         
         // Make sure userDetail and userDetail._id exist and are valid
         if (!userDetail || !userDetail._id) {
-            console.log("User ID is missing or invalid:", userDetail);
+            // console.log("User ID is missing or invalid:", userDetail);
             setOpenDialog(true);
             return;
         }
@@ -60,8 +60,8 @@ function Hero() {
         setMessages(msg);
         
         try {
-            console.log("Creating workspace with user ID:", userDetail._id);
-            console.log("Message being sent:", [msg]);
+            // console.log("Creating workspace with user ID:", userDetail._id);
+            // console.log("Message being sent:", [msg]);
             
             // Call CreateWorkSpace with proper error handling
             const workspaceId = await CreateWorkSpace({

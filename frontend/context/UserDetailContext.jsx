@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { useAuth } from '@react-oauth/google';
+// import { useAuth } from '@react-oauth/google';
 
 export const UserDetailContext = createContext();
 
@@ -18,11 +18,11 @@ export default function UserDetailContextProvider({ children }) {
     );
     
     useEffect(() => {
-        console.log("Auth state:", { userId, isSignedIn });
-        console.log("User data from query:", userData);
+        // console.log("Auth state:", { userId, isSignedIn });
+        // console.log("User data from query:", userData);
         
         if (userData) {
-            console.log("Setting user detail from query:", userData);
+            // console.log("Setting user detail from query:", userData);
             setUserDetail(userData);
         }
     }, [userData, userId, isSignedIn]);
