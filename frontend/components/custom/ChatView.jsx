@@ -62,7 +62,7 @@ function ChatView() {
       {
         prompt: PROMPT,
       },
-      { timeout: 30000 }
+      { timeout: 30000 } //gettign 504 error as vercel cant wait long for the code genration so increased wait time
     );
 
     // console.log(result.data.result);
