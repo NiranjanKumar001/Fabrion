@@ -5,8 +5,8 @@ const nextConfig = {
     }
 };
 
-export const config = {
-    runtime: "edge",
-  };
+// export const config = {
+//     runtime: "edge",
+//   };
 
 export default nextConfig;
