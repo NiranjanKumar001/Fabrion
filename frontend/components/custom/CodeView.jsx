@@ -20,31 +20,31 @@ import React, { useContext, useEffect, useState } from "react";
 function CodeView() {
   const [activeTab, setActiveTab] = useState("code");
   const [files, setFiles] = useState(Lookup?.DEFAULT_FILE);
+  const [generationStatus, setGenerationStatus] = useState("");
 
-  const {messages, setMessages} = useContext(MessagesContext);
+  const { messages, setMessages } = useContext(MessagesContext);
 
-  const UpdateFiles=useMutation(api.workspace.UpdateFiles);
+  const UpdateFiles = useMutation(api.workspace.UpdateFiles);
 
-  const {id}=useParams();
+  const { id } = useParams();
 
-  const convex=useConvex();
+  const convex = useConvex();
 
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    id&&GetFiles();
-  },[id]);
+  useEffect(() => {
+    id && GetFiles();
+  }, [id]);
 
-  const GetFiles=async()=>{
+  const GetFiles = async () => {
     setLoading(true);
-    const result=await convex.query(api.workspace.GetWorkspace,{
-      workspaceId:id
+    const result = await convex.query(api.workspace.GetWorkspace, {
+      workspaceId: id
     });
-    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...result?.fileData}
+    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...result?.fileData }
     setFiles(mergedFiles);
     setLoading(false);
   }
-
 
   useEffect(() => {
     if (messages?.length > 0) {
@@ -53,25 +53,96 @@ function CodeView() {
         GenerateAiCode();
       }
     }
-  }, [messages])
+  }, [messages]);
 
   const GenerateAiCode = async () => {
-    setLoading(true);
-    const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
-    const result = await axios.post('/api/gen-ai-code', {
-      prompt: PROMPT
-    });
-    // console.log(result.data);
-    const aiResp = result.data;
-
-    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...aiResp?.files }
-    setFiles(mergedFiles);
-    await UpdateFiles({
-      workspaceId:id,
-      files:aiResp?.files
-    });
-    setLoading(false);
-  }
+    try {
+      setLoading(true);
+      setGenerationStatus("Starting code generation...");
+      
+      // Initialize a temporary container for incrementally built files
+      let generatedFiles = {};
+      
+      const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
+      
+      const response = await fetch('/api/gen-ai-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: PROMPT }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+  
+      // Handle streaming response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+  
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const text = decoder.decode(value);
+        const lines = text.split('\n\n');
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              
+              if (data.status) {
+                setGenerationStatus(data.status);
+              }
+              
+              // Handle individual file updates
+              if (data.fileName && data.fileContent) {
+                // Add this file to our accumulated files
+                generatedFiles = {
+                  ...generatedFiles,
+                  [data.fileName]: data.fileContent
+                };
+                
+                // Update the UI with the current set of files
+                const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
+                setFiles(mergedFiles);
+                
+                // Update the status with the current file and progress
+                setGenerationStatus(`Generating: ${data.fileName} (${data.progress}%)`);
+              }
+              
+              if (data.complete && data.files) {
+                // Ensure we have the complete set
+                generatedFiles = data.files;
+                const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
+                setFiles(mergedFiles);
+                setGenerationStatus(data.message || "Files generated successfully!");
+                
+                // Save to database
+                await UpdateFiles({
+                  workspaceId: id,
+                  files: generatedFiles
+                });
+              }
+              
+              if (data.error) {
+                throw new Error(data.error);
+              }
+            } catch (e) {
+              console.error("Error parsing stream data:", e);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error generating code:", error);
+      setGenerationStatus("Error: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative">
@@ -99,17 +170,14 @@ function CodeView() {
         }}
         files={files}
         options={{
-          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',//taulwind cdn
-            'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js',//gsap cdn 
-            "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",// three js cdn for the dependencies to woek
+          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+            'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js',
+            "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
             "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
-             //three js cdn for the dependencies to work
           ]
-          // to work with the tailwind in the code editoe in the webpage so we used cdn 
         }}
       >
         <SandpackLayout>
-          {/* active tab is set to the code tab  */}
           {activeTab == "code" ? (
             <>
               <SandpackFileExplorer style={{ height: "80vh" }} />
@@ -123,11 +191,13 @@ function CodeView() {
         </SandpackLayout>
       </SandpackProvider>
       
-      {/* loader for the better ui */}
-      {loading&&<div className="p-10 bg-gray-900 opacity-80 absolute top-0 rounded-lg w-full h-full flex items-center justify-center">
-        <Loader2Icon className=" animate-spin h-10 w-10 text-white"/>
-        <h2 className="text-white">Generating your files...</h2>
-      </div>}
+      {loading && (
+        <div className="p-10 bg-gray-900 opacity-80 absolute top-0 rounded-lg w-full h-full flex flex-col items-center justify-center gap-4">
+          <Loader2Icon className="animate-spin h-10 w-10 text-white"/>
+          <h2 className="text-white">Generating your files...</h2>
+          <p className="text-gray-300 text-sm max-w-md text-center">{generationStatus}</p>
+        </div>
+      )}
     </div>
   );
 }
