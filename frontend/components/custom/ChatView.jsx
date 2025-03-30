@@ -7,7 +7,13 @@ import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
-import { ArrowRight, BotIcon, Link, Loader2Icon, PanelRightDashed } from "lucide-react";
+import {
+  ArrowRight,
+  BotIcon,
+  Link,
+  Loader2Icon,
+  PanelRightDashed,
+} from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -51,9 +57,13 @@ function ChatView() {
     setLoading(true);
 
     const PROMPT = JSON.stringify(messages) + Prompt.CHAT_PROMPT;
-    const result = await axios.post("/api/ai-chat", {
-      prompt: PROMPT,
-    });
+    const result = await axios.post(
+      "/api/ai-chat",
+      {
+        prompt: PROMPT,
+      },
+      { timeout: 30000 }
+    );
 
     // console.log(result.data.result);
 
@@ -92,7 +102,7 @@ function ChatView() {
               style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
               className="p-3 rounded-lg mb-4 flex gap-2 items-center leading-7"
             >
-              {userDetail?.picture  &&msg?.role == "user" &&(
+              {userDetail?.picture && msg?.role == "user" && (
                 <Image
                   src={userDetail?.picture}
                   alt="userImage"
@@ -141,16 +151,17 @@ function ChatView() {
           />
         )} */}
         {userDetail && (
-          <PanelRightDashed  onClick={() =>
-            document.dispatchEvent(new CustomEvent("toggle-sidebar"))
-          }
-          className="rounded-full cursor-pointer m-2"
-          src={userDetail?.picture}
-          alt="user"
-          width={30}
-          height={30}/>
+          <PanelRightDashed
+            onClick={() =>
+              document.dispatchEvent(new CustomEvent("toggle-sidebar"))
+            }
+            className="rounded-full cursor-pointer m-2"
+            src={userDetail?.picture}
+            alt="user"
+            width={30}
+            height={30}
+          />
         )}
-        
 
         <div
           className="p-5 border rounded-xl max-w-2xl w-full mt-3 "
