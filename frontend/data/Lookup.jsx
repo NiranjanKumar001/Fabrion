@@ -71,11 +71,9 @@ export default config;
     "date-fns": "^4.1.0",
     "react-chartjs-2": "^5.3.0",
     "chart.js": "^4.4.7",
-    "gsap": "^3.12.7",
     "framer-motion": "^11.0.0",
     "@radix-ui/react-slot": "^1.0.0",
     "@radix-ui/react-toast": "^1.0.0",
-    "three": "^0.160.0",
   },
   PRICING_DESC: 'Start with a free account to speed up your workflow on public projects or boost your entire team with instantly-opening production environments.',
   PRICING_OPTIONS: [

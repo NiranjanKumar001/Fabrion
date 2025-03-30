@@ -172,9 +172,6 @@ function CodeView() {
         files={files}
         options={{
           externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
-            'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js',
-            "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-            "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
           ]
         }}
       >
