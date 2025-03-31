@@ -99,8 +99,8 @@ function ChatView() {
           messages.map((msg, index) => (
             <div
               key={index}
-              style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
-              className="p-3 rounded-lg mb-4 flex gap-2 items-center leading-7"
+              // style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
+              className="p-3 rounded-lg flex gap-2 items-center leading-7"
             >
               {userDetail?.picture && msg?.role == "user" && (
                 <Image
@@ -117,11 +117,15 @@ function ChatView() {
                   alt="AiImage"
                   width={35}
                   height={35}
-                  className="rounded-full self-start"
+                  className="rounded-full self-start border-blue-600 border-2"
                 />
               )}
-              <div className="flex flex-col">
-                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              <div className="w-full h-full p-4 rounded-lg" style={{ backgroundColor: Colors.CHAT_BACKGROUND }}
+              >
+                <div className="flex flex-col"
+                >
+                  <ReactMarkdown>{msg.content}</ReactMarkdown>
+                </div>
               </div>
             </div>
             // react markdown (removed the classname feature in the latest update) so we need to wrap in a paretn and give it the style
