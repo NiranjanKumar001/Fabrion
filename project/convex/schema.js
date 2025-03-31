@@ -9,10 +9,11 @@ export default defineSchema({
         email:v.string(),
         picture:v.string(),
         uid:v.string(), 
+        apiKey: v.optional(v.string()),
     }),
     workspace:defineTable({
         messages:v.any(),//for json object
         fileData:v.optional(v.any()),
         user:v.id('users'),
-    }), 
+    }),
 });
