@@ -15,7 +15,6 @@ function Provider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const convex = useConvex();
     
-    // Initialize authentication check when component mounts
     useEffect(() => {
         checkAuthentication();
     }, []);
@@ -24,14 +23,12 @@ function Provider({ children }) {
         try {
             setIsLoading(true);
             
-            // Check if we're in a browser environment
             if (typeof window !== 'undefined') {
                 const user = localStorage.getItem('user');
                 
                 if (user) {
                     const userData = JSON.parse(user);
                     
-                    // Only query Convex if we have an email
                     if (userData?.email) {
                         const result = await convex.query(api.users.GetUser, {
                             email: userData.email
@@ -42,7 +39,6 @@ function Provider({ children }) {
                             setUserDetail(result);
                         } else {
                             console.log("User not found in database");
-                            // Clear localStorage if user doesn't exist in database
                             localStorage.removeItem('user');
                             setUserDetail(null);
                         }
@@ -63,7 +59,6 @@ function Provider({ children }) {
         }
     }
     
-    // Effect to save user data to localStorage when it changes
     useEffect(() => {
         if (userDetail && typeof window !== 'undefined') {
             localStorage.setItem('user', JSON.stringify(userDetail));

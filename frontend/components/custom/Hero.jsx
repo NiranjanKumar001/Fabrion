@@ -21,7 +21,6 @@ function Hero() {
     const CreateWorkSpace = useMutation(api.workspace.CreateWorkspace); 
     const router = useRouter(); 
     
-    // Monitor authentication state changes
     useEffect(() => {
         if (!isAuthLoading && userDetail && userDetail._id) {
             console.log("User authenticated and ready:", userDetail);
@@ -33,32 +32,27 @@ function Hero() {
     }, [userDetail, isAuthLoading]);
  
     const onGenerate = async(input) => { 
-        // If auth is still loading, wait
         if (isAuthLoading) {
             console.log("Authentication is still loading, please wait");
             return;
         }
         
-        // If user is not authenticated, open sign-in dialog
         if (!userDetail?._id) { 
             console.log("User not authenticated, opening sign-in dialog");
             setOpenDialog(true); 
             return; 
         } 
  
-        // Create the message object
         const msg = {
             role: 'user', 
             content: input 
         };
         
-        // Update messages state
         setMessages(msg);
         
         try {
             console.log("Creating workspace with user ID:", userDetail._id);
             
-            // Call CreateWorkSpace with proper error handling
             const workspaceId = await CreateWorkSpace({
                 user: userDetail._id,
                 messages: [msg]
@@ -76,12 +70,10 @@ function Hero() {
         }
     } 
     
-    // Handle suggestion clicks
     const handleSuggestionClick = (suggestion) => {
         onGenerate(suggestion);
     };
 
-    // Handle sign-in success
     const handleSignInSuccess = () => {
         refreshAuth(); // Refresh auth state after sign-in
     };
@@ -111,7 +103,6 @@ function Hero() {
                 </div> 
             </div> 
             
-            {/* Show auth status with better handling of loading state */}
             <div className="text-xs text-gray-500 mt-2">
                 {isAuthLoading ? "Checking authentication..." : 
                  isUserReady ? "User authenticated" : "User not authenticated"}
