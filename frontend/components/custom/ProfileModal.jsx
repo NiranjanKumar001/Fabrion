@@ -42,8 +42,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
     }
   };
 
-
-
   // Function to mask API key except for the last 4 characters
   const maskApiKey = (key) => {
     if (!key) return "No API key saved";
