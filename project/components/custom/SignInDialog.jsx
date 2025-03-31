@@ -14,12 +14,11 @@ import axios from 'axios';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import uuid4 from "uuid4";
- 
+
 function SignInDialog({ openDialog, closeDialog, onSignInSuccess }) {
-    
     const { userDetail, setUserDetail, refreshAuth } = useContext(UserDetailContext);
     const CreateUser = useMutation(api.users.CreateUser);
- 
+    
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
@@ -28,7 +27,7 @@ function SignInDialog({ openDialog, closeDialog, onSignInSuccess }) {
                     'https://www.googleapis.com/oauth2/v3/userinfo',
                     { headers: { Authorization: 'Bearer ' + tokenResponse?.access_token } },
                 );
-             
+                
                 const user = userInfo.data;
                 
                 // Create user in database
@@ -56,9 +55,6 @@ function SignInDialog({ openDialog, closeDialog, onSignInSuccess }) {
                 if (onSignInSuccess) {
                     onSignInSuccess();
                 }
-                
-                // Close dialog
-                closeDialog(false);
             } catch (error) {
                 console.error("Error during Google sign-in:", error);
                 // You could add an error message to the user here
@@ -66,7 +62,15 @@ function SignInDialog({ openDialog, closeDialog, onSignInSuccess }) {
         },
         onError: errorResponse => console.log(errorResponse),
     });
- 
+
+    const handleSignInClick = () => {
+        // Close the dialog immediately
+        closeDialog(false);
+        
+        // Then trigger the Google login process
+        googleLogin();
+    };
+    
     return (
         <Dialog open={openDialog} onOpenChange={closeDialog}>
             <DialogContent>
@@ -76,13 +80,15 @@ function SignInDialog({ openDialog, closeDialog, onSignInSuccess }) {
                 </DialogHeader>
                 
                 <div className="flex flex-col items-center justify-center gap-3">
-                    <Button className='bg-blue-500 text-white hover:bg-blue-400 mt-3' onClick={googleLogin}>
+                    <Button 
+                        className='bg-blue-500 text-white hover:bg-blue-400 mt-3' 
+                        onClick={handleSignInClick}
+                    >
                         Sign In With Google
                     </Button>
                     
                     <p>{Lookup.SIGNIn_AGREEMENT_TEXT}</p>
                 </div>
-            
             </DialogContent>
         </Dialog>
     )
