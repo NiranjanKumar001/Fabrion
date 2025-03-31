@@ -11,13 +11,13 @@ const Sidebar = ({ isOpen, onClose }) => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const handleLogout = () => {
-    // ✅ Clear user data from local storage
+    //  Clear user data from local storage
     localStorage.removeItem("user");
     
-    // ✅ Reset user state
+    //  Reset user state
     setUserDetail(null);
     
-    // ✅ Redirect to login page
+    //  Redirect to login page
     router.push("/");
   };
 
