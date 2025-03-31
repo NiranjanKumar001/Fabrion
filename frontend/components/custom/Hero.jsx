@@ -15,30 +15,33 @@ function Hero() {
     const [isUserReady, setIsUserReady] = useState(false);
  
     const { messages, setMessages } = useContext(MessagesContext); 
-    const { userDetail, setUserDetail } = useContext(UserDetailContext); 
+    const { userDetail, setUserDetail, isAuthLoading, refreshAuth } = useContext(UserDetailContext); 
     const [openDialog, setOpenDialog] = useState(false);
- 
+
     const CreateWorkSpace = useMutation(api.workspace.CreateWorkspace); 
     const router = useRouter(); 
     
-    // Add an effect to check if user data is ready
+    // Monitor authentication state changes
     useEffect(() => {
-        if (userDetail && userDetail._id) {
-            console.log("User detail loaded");
+        if (!isAuthLoading && userDetail && userDetail._id) {
+            console.log("User authenticated and ready:", userDetail);
             setIsUserReady(true);
-        } else {
-            console.log("Waiting for user detail...");
+        } else if (!isAuthLoading) {
+            console.log("User not authenticated");
             setIsUserReady(false);
         }
-    }, [userDetail]);
+    }, [userDetail, isAuthLoading]);
  
     const onGenerate = async(input) => { 
-        // console.log("onGenerate called with input:", input);
-        // console.log("Current userDetail:", userDetail);
+        // If auth is still loading, wait
+        if (isAuthLoading) {
+            console.log("Authentication is still loading, please wait");
+            return;
+        }
         
-        // First check if user is logged in
-        if (!userDetail?.name) { 
-            // console.log("No user name found, opening dialog");
+        // If user is not authenticated, open sign-in dialog
+        if (!userDetail?._id) { 
+            console.log("User not authenticated, opening sign-in dialog");
             setOpenDialog(true); 
             return; 
         } 
@@ -49,19 +52,11 @@ function Hero() {
             content: input 
         };
         
-        // Make sure userDetail and userDetail._id exist and are valid
-        if (!userDetail || !userDetail._id) {
-            // console.log("User ID is missing or invalid:", userDetail);
-            setOpenDialog(true);
-            return;
-        }
-        
         // Update messages state
         setMessages(msg);
         
         try {
-            // console.log("Creating workspace with user ID:", userDetail._id);
-            // console.log("Message being sent:", [msg]);
+            console.log("Creating workspace with user ID:", userDetail._id);
             
             // Call CreateWorkSpace with proper error handling
             const workspaceId = await CreateWorkSpace({
@@ -70,7 +65,7 @@ function Hero() {
             });
             
             if (workspaceId) {
-                console.log("Workspace created successfully:", workspaceId);
+                console.log("Workspace created successfully");
                 router.push('/workspace/' + workspaceId);
             } else {
                 console.error("Failed to create workspace, no ID returned");
@@ -81,11 +76,14 @@ function Hero() {
         }
     } 
     
-    // Add this function to handle suggestion clicks
+    // Handle suggestion clicks
     const handleSuggestionClick = (suggestion) => {
-        console.log("Suggestion clicked:", suggestion);
-        console.log("Current user state:", userDetail);
         onGenerate(suggestion);
+    };
+
+    // Handle sign-in success
+    const handleSignInSuccess = () => {
+        refreshAuth(); // Refresh auth state after sign-in
     };
     
     return ( 
@@ -113,9 +111,10 @@ function Hero() {
                 </div> 
             </div> 
             
-            {/* Show user status for debugging */}
+            {/* Show auth status with better handling of loading state */}
             <div className="text-xs text-gray-500 mt-2">
-                {isUserReady ? "User authenticated" : "User not authenticated"}
+                {isAuthLoading ? "Checking authentication..." : 
+                 isUserReady ? "User authenticated" : "User not authenticated"}
             </div>
             
             <div className='flex flex-wrap max-w-2xl items-center justify-center gap-3 mt-8'> 
@@ -129,7 +128,11 @@ function Hero() {
                     </h2> 
                 ))} 
             </div> 
-            <SignInDialog openDialog={openDialog} closeDialog={(v)=>setOpenDialog(v)}/> 
+            <SignInDialog 
+                openDialog={openDialog} 
+                closeDialog={(v) => setOpenDialog(v)}
+                onSignInSuccess={handleSignInSuccess}
+            /> 
         </div> 
     ) 
 } 
