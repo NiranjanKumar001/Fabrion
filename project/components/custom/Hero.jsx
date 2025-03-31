@@ -77,6 +77,7 @@ function Hero() {
     const handleSignInSuccess = () => {
         refreshAuth(); // Refresh auth state after sign-in
     };
+    // check
     
     return ( 
         <div className="flex flex-col items-center mt-36 xl:mt-52 gap-2 "> 
