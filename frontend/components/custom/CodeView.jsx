@@ -11,7 +11,7 @@ import {
   SandpackPreview,
   SandpackFileExplorer,
 } from "@codesandbox/sandpack-react";
-import axios from "axios";
+// import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
 import { Loader2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -163,6 +163,7 @@ function CodeView() {
           </h2>
         </div>
       </div>
+
       <SandpackProvider template="react" theme={"dark"}
         customSetup={{
           dependencies: {
@@ -175,6 +176,7 @@ function CodeView() {
           ]
         }}
       >
+
         <SandpackLayout>
           {activeTab == "code" ? (
             <>
