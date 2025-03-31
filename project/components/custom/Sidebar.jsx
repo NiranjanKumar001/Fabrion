@@ -36,7 +36,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </div>
 
           {/* Sidebar Links */}
-          <ul className="space-y-2 mt-4">
+          <ul className="space-y-2 mt-2">
             <li className="p-2 hover:bg-gray-800 rounded cursor-pointer">
               Dashboard
             </li>
@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           {/* Logout Button */}
           <button
             onClick={handleLogout}
-            className="mt-auto bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            className=" bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2"
           >
             Logout
           </button>
