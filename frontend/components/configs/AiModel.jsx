@@ -23,6 +23,8 @@ const getApiKey = (userApiKey) => {
   return apiKey;
 };
 
+
+
 // Modified export to accept optional user API key
 export const createGeminiClient = (userApiKey = null) => {
   const apiKey = getApiKey(userApiKey);

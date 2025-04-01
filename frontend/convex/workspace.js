@@ -1,6 +1,21 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
+
+export const getApiKey = query({
+    args: {
+      userId: v.id("users"),
+    },
+    handler: async (ctx, args) => {
+      const user = await ctx.db.get(args.userId);
+      if (!user) {
+        throw new Error(`User with ID ${args.userId} not found`);
+      }
+      
+      return { apiKey: user.apiKey || null };
+    },
+  });
+
 export const CreateWorkspace = mutation({
     args: {
         messages: v.any(),
@@ -79,6 +94,7 @@ export const GetUserWithApiKey = query({
 });
 
 
+
 export const UpdateMessages = mutation({
     args: {
         workspaceId: v.id('workspace'),
@@ -126,3 +142,4 @@ export const GetAllWorkspace = query({
         return result;
     }
 });
+
