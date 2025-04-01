@@ -12,10 +12,8 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
-  // Mutation for updating API key
   const updateApiKey = useMutation(api.workspace.UpdateApiKey);
 
-  // Conditional query execution
   const getUserData = useQuery(
     api.workspace.GetUserWithApiKey,
     userDetail && userDetail._id ? { userId: userDetail._id } : undefined // Pass undefined if userId is missing
@@ -28,7 +26,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
     }
   }, [getUserData]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -54,7 +51,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
     }
   };
 
-  // Mask API key except for the last 4 characters
   const maskApiKey = (key) => {
     if (!key) return "No API key saved";
     return key.length > 4
@@ -62,15 +58,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
       : "•".repeat(key.length);
   };
 
-  // Prevent rendering if modal is closed
   if (!isOpen) return null;
 
   return (
     <>
-      {/* Modal Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-60 z-20" onClick={onClose} />
 
-      {/* Modal Content */}
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 rounded-lg p-6 z-30 w-full max-w-md shadow-xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Profile Settings</h2>
@@ -95,7 +88,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Profile info section */}
         <div className="mb-6 p-4 bg-gray-700 rounded-lg">
           <h3 className="font-medium mb-3">Your API Key</h3>
           {getUserData ? (
@@ -142,7 +134,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {/* Form Section */}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">
