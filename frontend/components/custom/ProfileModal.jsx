@@ -12,6 +12,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
+
   const updateApiKey = useMutation(api.workspace.UpdateApiKey);
   const getUserData = useQuery(api.workspace.GetUserWithApiKey,
     userDetail?._id ? { userId: userDetail._id } : undefined
@@ -40,6 +41,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
       console.error("Error updating API key:", error);
     } finally {
       setIsLoading(false);
+
     }
   };
 
