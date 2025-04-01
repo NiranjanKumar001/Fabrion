@@ -23,7 +23,7 @@ function Hero() {
     
     useEffect(() => {
         if (!isAuthLoading && userDetail && userDetail._id) {
-            console.log("User authenticated and ready:", userDetail);
+            console.log("User authenticated and ready");
             setIsUserReady(true);
         } else if (!isAuthLoading) {
             console.log("User not authenticated");
@@ -51,7 +51,7 @@ function Hero() {
         setMessages(msg);
         
         try {
-            console.log("Creating workspace with user ID:", userDetail._id);
+            console.log("Creating workspace with user ID");
             
             const workspaceId = await CreateWorkSpace({
                 user: userDetail._id,

@@ -35,7 +35,7 @@ function Provider({ children }) {
                         });
                         
                         if (result) {
-                            console.log("User authenticated from database:", result);
+                            console.log("User authenticated from database");
                             setUserDetail(result);
                         } else {
                             console.log("User not found in database");

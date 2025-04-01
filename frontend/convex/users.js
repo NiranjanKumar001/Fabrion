@@ -15,7 +15,7 @@ export const CreateUser = mutation({
       .query("users")
       .filter((q) => q.eq(q.field("email"), args.email))
       .collect();
-    console.log(user);
+    // console.log(user);
 
     // not then use new user
     if (user?.length == 0) {
