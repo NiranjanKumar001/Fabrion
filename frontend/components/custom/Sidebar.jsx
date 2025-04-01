@@ -53,9 +53,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             >
               Profile
             </li>
-            <li className="p-2 hover:bg-gray-800 rounded cursor-pointer">
-              Settings
-            </li>
           </ul>
           
           {/* Logout Button */}

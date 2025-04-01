@@ -36,6 +36,9 @@ const ProfileModal = ({ isOpen, onClose }) => {
         apiKey: apiKey
       });
       setMessage({ text: "API key updated successfully!", type: "success"});
+      setTimeout(() => {
+        setMessage({ text: "", type: "" });
+      }, 3000);
     } catch (error) {
       setMessage({ text: "Failed to update API key. Please try again.", type: "error" });
       console.error("Error updating API key:", error);
