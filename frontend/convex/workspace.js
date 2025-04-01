@@ -44,16 +44,40 @@ export const UpdateApiKey = mutation({
     }
 });
 
+// // Get user with API key
+// export const GetUserWithApiKey = query({
+//     args: {
+//         userId: v.id('users')
+//     },
+//     handler: async(ctx, args) => {
+//         const user = await ctx.db.get(args.userId);
+//         return user;
+//     }
+// });
+
 // Get user with API key
 export const GetUserWithApiKey = query({
     args: {
-        userId: v.id('users')
+        userId: v.id('users') // Ensure this matches the expected input type
     },
-    handler: async(ctx, args) => {
+    handler: async (ctx, args) => {
+        // Check if userId is provided
+        if (!args.userId) {
+            throw new Error("Missing required field: userId");
+        }
+
+        // Fetch user from the database
         const user = await ctx.db.get(args.userId);
+
+        // Check if the user exists
+        if (!user) {
+            throw new Error(`User with ID ${args.userId} not found`);
+        }
+
         return user;
     }
 });
+
 
 export const UpdateMessages = mutation({
     args: {
