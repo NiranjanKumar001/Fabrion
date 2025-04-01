@@ -8,11 +8,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const { userDetail } = useContext(UserDetailContext);
   const [apiKey, setApiKey] = useState("");
   const [showApiKey, setShowApiKey] = useState(false);
+  const [shownewApiKey, setnewShowApiKey] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const updateApiKey = useMutation(api.workspace.UpdateApiKey);
-  const getUserData = useQuery(api.workspace.GetUserWithApiKey, 
+  const getUserData = useQuery(api.workspace.GetUserWithApiKey,
     userDetail?._id ? { userId: userDetail._id } : undefined
   );
 
@@ -26,7 +27,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage({ text: "", type: "" });
-  
+
     try {
       // Remove the lastUpdated field from the API call
       await updateApiKey({
@@ -45,7 +46,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
   // Function to mask API key except for the last 4 characters
   const maskApiKey = (key) => {
     if (!key) return "No API key saved";
-    return key.length > 4 
+    return key.length > 4
       ? '•'.repeat(Math.min(12, key.length - 4)) + key.slice(-4)
       : '•'.repeat(key.length);
   };
@@ -56,12 +57,12 @@ const ProfileModal = ({ isOpen, onClose }) => {
     <>
       {/* Modal Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-60 z-20" onClick={onClose} />
-      
+
       {/* Modal Content */}
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 rounded-lg p-6 z-30 w-full max-w-md shadow-xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Profile Settings</h2>
-          <button 
+          <button
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors p-1"
           >
@@ -77,21 +78,32 @@ const ProfileModal = ({ isOpen, onClose }) => {
           <h3 className="font-medium mb-3">Your API Key</h3>
           {getUserData ? (
             <div className="space-y-3">
-                <span className="text-sm text-gray-300">Current Key:</span>
-              <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-300">Current Key:</span>
+              <div className="flex items-center justify-between w-full">
                 <div className="flex items-center">
-                  <span className="font-mono text-sm bg-gray-600 py-1 px-2 rounded ">
+                  <span className="font-mono text-xs bg-gray-600 py-1 px-2 rounded">
                     {showApiKey && getUserData.apiKey ? getUserData.apiKey : maskApiKey(getUserData.apiKey)}
                   </span>
-                  <button 
-                    onClick={() => setShowApiKey(!showApiKey)}
-                    className="ml-2 text-blue-400 hover:text-blue-300 text-sm"
-                  >
-                    {showApiKey ? "Hide" : "Show"}
-                  </button>
+                  <button
+                type="button"
+                onClick={() => setShowApiKey(!showApiKey)}
+                className="ml-2 text-blue-400 hover:text-blue-300"
+              >
+                {showApiKey ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                )}
+              </button>
                 </div>
               </div>
-              
+
             </div>
           ) : (
             <div className="text-center py-2">
@@ -107,18 +119,18 @@ const ProfileModal = ({ isOpen, onClose }) => {
             </label>
             <div className="relative">
               <input
-                type={showApiKey ? "text" : "password"}
+                type={shownewApiKey ? "text" : "password"}
                 // value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your Gemini API key"
               />
               <button
-                type="button" 
-                onClick={() => setShowApiKey(!showApiKey)}
+                type="button"
+                onClick={() => setnewShowApiKey(!shownewApiKey)}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
               >
-                {showApiKey ? (
+                {shownewApiKey ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                     <line x1="1" y1="1" x2="23" y2="23"></line>
@@ -130,6 +142,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
                   </svg>
                 )}
               </button>
+              
             </div>
             <p className="text-xs text-gray-400 mt-1">
               Your API key is securely stored and used for AI processing.
@@ -137,12 +150,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
           </div>
 
           {message.text && (
-            <div 
-              className={`mb-4 p-3 rounded flex items-center ${
-                message.type === "success" 
-                  ? "bg-green-900/50 text-green-200 border border-green-700" 
+            <div
+              className={`mb-4 p-3 rounded flex items-center ${message.type === "success"
+                  ? "bg-green-900/50 text-green-200 border border-green-700"
                   : "bg-red-900/50 text-red-200 border border-red-700"
-              }`}
+                }`}
             >
               <span className="mr-2">
                 {message.type === "success" ? (
