@@ -8,22 +8,23 @@ const {
 const fs = require("node:fs");
 const mime = require("mime-types");
 
-// Get the API key - either from user or default
+// Modified version with better error handling
 const getApiKey = (userApiKey) => {
-  // Use user's API key if provided, otherwise fall back to default key
-  const apiKey = userApiKey || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-  
-  // Log which API key is being used (without showing the full key)
-  if (userApiKey) {
-      console.log(`Using user's API key: ${userApiKey.substring(0, 4)}...${userApiKey.slice(-4)}`);
-  } else {
-      console.log("Using default API key");
+  // Validate keys before use
+  const apiKey = (userApiKey && typeof userApiKey === 'string' && userApiKey.trim()) 
+    ? userApiKey.trim()
+    : process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('No valid API key found - please configure your environment variables or set a user API key');
   }
+
+  // Security: Never log full keys
+  const keyType = userApiKey ? 'user-provided' : 'default';
+  console.log(`Using ${keyType} API key (${apiKey.substring(0, 6)}...${apiKey.slice(-4)})`);
   
   return apiKey;
 };
-
-
 
 // Modified export to accept optional user API key
 export const createGeminiClient = (userApiKey = null) => {

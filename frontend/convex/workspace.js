@@ -2,19 +2,6 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 
-export const getApiKey = query({
-    args: {
-      userId: v.id("users"),
-    },
-    handler: async (ctx, args) => {
-      const user = await ctx.db.get(args.userId);
-      if (!user) {
-        throw new Error(`User with ID ${args.userId} not found`);
-      }
-      
-      return { apiKey: user.apiKey || null };
-    },
-  });
 
 export const CreateWorkspace = mutation({
     args: {
@@ -143,3 +130,19 @@ export const GetAllWorkspace = query({
     }
 });
 
+// Example Convex action
+export const generateResponse = mutation({
+    args: { prompt: v.string() },
+    handler: async (ctx, args) => {
+      // 1. Get user's API key
+      const user = await ctx.db.get(ctx.user._id);
+      const userApiKey = user?.apiKey || null;
+  
+      // 2. Create client with proper key
+      const { chatSession } = createGeminiClient(userApiKey);
+  
+      // 3. Execute AI call
+      const result = await chatSession.sendMessage(args.prompt);
+      return result.response.text();
+    }
+  });
