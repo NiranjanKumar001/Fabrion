@@ -97,7 +97,7 @@ function Hero() {
                             onClick={() => onGenerate(userInput)} 
                             className='bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer' 
                         />
-                    )} 
+                    )}
                 </div> 
                 <div> 
                     <Link className='h-5 w-5' /> 
