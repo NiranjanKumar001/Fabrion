@@ -164,7 +164,7 @@ function CodeView() {
         </div>
       </div>
 
-      <SandpackProvider template="react" theme={"dark"}
+      <SandpackProvider template="react" autorun theme={"dark"}
         customSetup={{
           dependencies: {
             ...Lookup.DEPENDANCY
