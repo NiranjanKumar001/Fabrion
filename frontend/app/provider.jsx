@@ -1,6 +1,6 @@
 "use client"
 import React, { useContext, useEffect, useState } from 'react'
-// import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { MessagesContext } from '@/context/MessagesContext'
 import { UserDetailContext } from '@/context/UserDetailContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -75,13 +75,17 @@ function Provider({ children }) {
                     refreshAuth: checkAuthentication 
                 }}>
                     <MessagesContext.Provider value={{ messages, setMessages }}>
-                        
+                        <NextThemesProvider
+                            attribute="class"
+                            defaultTheme="dark"
+                            enableSystem
+                            disableTransitionOnChange>
                             
                             {/* <SidebarProvider defaultOpen={false}>
                                 <AppSidebar/> */}
                             {children}
                             {/* </SidebarProvider> */}
-                        {/* </NextThemesProvider> */}
+                        </NextThemesProvider>
                     </MessagesContext.Provider>
                 </UserDetailContext.Provider>
             </GoogleOAuthProvider>
