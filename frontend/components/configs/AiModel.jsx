@@ -22,7 +22,6 @@ const getApiKey = (userApiKey) => {
   // Security: Never log full keys
   const keyType = userApiKey ? 'user-provided' : 'default';
   console.log(`Using ${keyType} API key (${apiKey.substring(0, 6)}...${apiKey.slice(-4)})`);
-  
   return apiKey;
 };
 
