@@ -164,13 +164,14 @@ function CodeView() {
         </div>
       </div>
 
-      <SandpackProvider template="react" autorun theme={"dark"}
+      <SandpackProvider template="react" theme={"dark"}
         customSetup={{
           dependencies: {
             ...Lookup.DEPENDANCY
           }
         }}
         files={files}
+        
         options={{
           externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
           ]
