@@ -21,7 +21,12 @@ function WorkspaceHistory() {
       const result = await convex.query(api.workspace.GetAllWorkspace, {
         userId: userDetail?._id,
       });
-      setWorkspaceList(result || []);
+      
+      // Sort the workspaces with the newest first
+      // Assuming each workspace has a _creationTime field from Convex
+      const sortedResult = [...(result || [])].sort((a, b) => b._creationTime - a._creationTime);
+      
+      setWorkspaceList(sortedResult);
     } catch (error) {
       console.error("Error fetching workspace history:", error);
     }
