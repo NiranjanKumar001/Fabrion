@@ -22,6 +22,7 @@ const ProfileModal = ({ isOpen, onClose }) => {
     userDetail && userDetail._id ? { userId: userDetail._id } : undefined // Pass undefined if userId is missing
   );
 
+  
   // Update API key state when query data changes
   useEffect(() => {
     if (getUserData && getUserData.apiKey) {
