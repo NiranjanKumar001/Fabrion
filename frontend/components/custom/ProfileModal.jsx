@@ -17,9 +17,14 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const updateApiKey = useMutation(api.workspace.UpdateApiKey);
   const deleteApiKey = useMutation(api.workspace.DeleteApiKey);
 
+  // const getUserData = useQuery(
+  //   api.workspace.GetUserWithApiKey,
+  //   userDetail && userDetail._id ? { userId: userDetail._id } : undefined // Pass undefined if userId is missing
+  // );
+
   const getUserData = useQuery(
     api.workspace.GetUserWithApiKey,
-    userDetail && userDetail._id ? { userId: userDetail._id } : undefined // Pass undefined if userId is missing
+    userDetail && userDetail._id ? { userId: userDetail._id } : "skip"
   );
 
   

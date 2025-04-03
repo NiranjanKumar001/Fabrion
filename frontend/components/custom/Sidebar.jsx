@@ -10,15 +10,29 @@ const Sidebar = ({ isOpen, onClose }) => {
   const router = useRouter();
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
+  // const handleLogout = () => {
+  //   //  Clear user data from local storage
+  //   localStorage.removeItem("user");
+    
+  //   //  Reset user state
+  //   setUserDetail(null);
+    
+  //   //  Redirect to login page
+  //   router.push("/");
+  // };
+
   const handleLogout = () => {
-    //  Clear user data from local storage
-    localStorage.removeItem("user");
+    // Close the profile modal first if it's open
+    if (isProfileModalOpen) {
+      setIsProfileModalOpen(false);
+    }
     
-    //  Reset user state
-    setUserDetail(null);
-    
-    //  Redirect to login page
-    router.push("/");
+    // Then perform logout after a small delay to ensure components unmount
+    setTimeout(() => {
+      localStorage.removeItem("user");
+      setUserDetail(null);
+      router.push("/");
+    }, 100);
   };
 
   const openProfileModal = () => {
