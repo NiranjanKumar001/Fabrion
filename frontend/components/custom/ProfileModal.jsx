@@ -176,7 +176,6 @@ const ProfileModal = ({ isOpen, onClose }) => {
           )}
         </div>
 
-
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2">
