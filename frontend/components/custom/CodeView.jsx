@@ -86,12 +86,18 @@ function CodeView() {
         if (done) break;
         
         const text = decoder.decode(value);
+        // Split by double newlines which should separate JSON objects
         const lines = text.split('\n\n');
         
         for (const line of lines) {
+          // Only process lines that start with 'data: '
           if (line.startsWith('data: ')) {
             try {
-              const data = JSON.parse(line.slice(6));
+              const jsonText = line.slice(6).trim();
+              // Skip empty data chunks
+              if (!jsonText) continue;
+              
+              const data = JSON.parse(jsonText);
               
               if (data.status) {
                 setGenerationStatus(data.status);
@@ -110,7 +116,7 @@ function CodeView() {
                 setFiles(mergedFiles);
                 
                 // Update the status with the current file and progress
-                setGenerationStatus(`Generating: ${data.fileName} (${data.progress}%)`);
+                setGenerationStatus(`Generating: ${data.fileName} (${data.progress || 0}%)`);
               }
               
               if (data.complete && data.files) {
@@ -126,13 +132,16 @@ function CodeView() {
                   files: generatedFiles
                 });
               }
-              //cchek over here the code has some parsing error ?
               
               if (data.error) {
-                throw new Error(data.error);
+                setGenerationStatus("Error: " + data.error);
+                // console.error("Server reported error:", data.error);
+                // Don't throw here - just log and continue
               }
-            } catch (e) {
-              console.error("Error parsing stream data:", e);
+            } catch (parseError) {
+              console.error("Error parsing stream data:", parseError);
+              // console.log("Problematic data:", line.slice(6));
+              // Continue processing other chunks - don't throw
             }
           }
         }
