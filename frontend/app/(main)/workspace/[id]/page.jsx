@@ -22,7 +22,6 @@ function Workspace() {
 
     return (
         <div className='p-3 pr-5 mt-3 flex'>
-            {/* Import the Sidebar component */}
             <Sidebar 
                 isOpen={sidebarOpen} 
                 onClose={() => setSidebarOpen(false)} 
