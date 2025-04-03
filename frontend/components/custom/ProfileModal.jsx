@@ -11,9 +11,11 @@ const ProfileModal = ({ isOpen, onClose }) => {
   const [showApiKey, setShowApiKey] = useState(false);
   const [shownewApiKey, setnewShowApiKey] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
 
   const updateApiKey = useMutation(api.workspace.UpdateApiKey);
+  const deleteApiKey = useMutation(api.workspace.DeleteApiKey);
 
   const getUserData = useQuery(
     api.workspace.GetUserWithApiKey,
@@ -49,6 +51,31 @@ const ProfileModal = ({ isOpen, onClose }) => {
       console.error("Error updating API key:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDeleteApiKey = async () => {
+    if (confirm("Are you sure you want to delete your API key?")) {
+      setDeleteLoading(true);
+      setMessage({ text: "", type: "" });
+
+      try {
+        await deleteApiKey({
+          userId: userDetail._id
+        });
+        setMessage({ text: "API key deleted successfully!", type: "success" });
+        setTimeout(() => {
+          setMessage({ text: "", type: "" });
+        }, 3000);
+      } catch (error) {
+        setMessage({
+          text: "Failed to delete API key. Please try again.",
+          type: "error",
+        });
+        console.error("Error deleting API key:", error);
+      } finally {
+        setDeleteLoading(false);
+      }
     }
   };
 
@@ -104,9 +131,42 @@ const ProfileModal = ({ isOpen, onClose }) => {
                     onClick={() => setShowApiKey(!showApiKey)}
                     className="ml-2 text-blue-400 hover:text-blue-300"
                   >
-                    <Button>Delete</Button>
+                    {showApiKey ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    )}
                   </button>
                 </div>
+                {getUserData.apiKey && (
+                  <button
+                    type="button"
+                    onClick={handleDeleteApiKey}
+                    disabled={deleteLoading}
+                    className="text-red-400 hover:text-red-300 ml-2 p-1"
+                    title="Delete API Key"
+                  >
+                    {deleteLoading ? (
+                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    )}
+                  </button>
+                )}
               </div>
             </div>
           ) : (
