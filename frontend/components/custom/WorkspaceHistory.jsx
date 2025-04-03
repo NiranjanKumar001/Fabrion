@@ -22,8 +22,6 @@ function WorkspaceHistory() {
         userId: userDetail?._id,
       });
       
-      // Sort the workspaces with the newest first
-      // Assuming each workspace has a _creationTime field from Convex
       const sortedResult = [...(result || [])].sort((a, b) => b._creationTime - a._creationTime);
       
       setWorkspaceList(sortedResult);
