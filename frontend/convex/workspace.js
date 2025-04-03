@@ -57,6 +57,7 @@ export const UpdateApiKey = mutation({
 //     }
 // });
 
+//fixed the logout error (when we logout the local storage is rmeoved but we over her we wre having check for that so the modal was chedcking it for  the user but )
 export const GetUserWithApiKey = query({
     args: {
       userId: v.union(v.id('users'), v.literal("skip"))
