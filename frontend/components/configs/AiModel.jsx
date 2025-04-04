@@ -1,4 +1,3 @@
-// Modified version of your original Gemini file
 
 const {
   GoogleGenerativeAI,

@@ -183,9 +183,6 @@ function CodeView() {
         
         options={{
           externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
-            "https://cdn.jsdelivr.net/npm/three@<version>/build/three.module.js",
-    "three/addons/",
-    "https://cdn.jsdelivr.net/npm/three@<version>/examples/jsm/"
           ]
         }}
       >

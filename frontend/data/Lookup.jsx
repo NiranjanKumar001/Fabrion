@@ -78,6 +78,5 @@ export default config;
     "@react-three/fiber": "^8.12.0",
     "@react-three/drei": "^9.55.3",
     "@react-three/cannon": "^5.0.5",
-    "three-stdlib": "^2.27.1"
   },
 }
