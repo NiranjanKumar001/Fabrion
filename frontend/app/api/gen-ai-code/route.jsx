@@ -25,6 +25,7 @@ export async function POST(req) {
         encoder.encode(`data: ${JSON.stringify({ status: "Starting generation..." })}\n\n`)
       );
       
+      
       // Call the AI model
       const result = await GenAiCode.sendMessage(prompt);
       const responseText = result.response.text();
@@ -51,7 +52,7 @@ export async function POST(req) {
           );
           
           // Add a small delay to create a visible effect
-          await new Promise(resolve => setTimeout(resolve, 300));
+          // await new Promise(resolve => setTimeout(resolve, 300));
         }
         
         // Send complete data at the end
