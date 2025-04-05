@@ -8,7 +8,6 @@ export default function NetworkWarningToast() {
   const [networkStatus, setNetworkStatus] = useState('');
 
   useEffect(() => {
-    // Check if we're in browser environment
     if (typeof window === 'undefined') return;
 
     let timeoutId;

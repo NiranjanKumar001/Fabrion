@@ -1,4 +1,3 @@
-// hooks/useNetworkStatus.js
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -28,7 +27,6 @@ const useNetworkStatus = () => {
         setIsSlowConnection(slow);
         setNetworkInfo(`${effectiveType.toUpperCase()} (${downlink} Mbps)`);
 
-        // Auto-show warning when connection becomes slow
         if (slow) {
           setShowWarning(true);
           // Auto-dismiss after 10 seconds
