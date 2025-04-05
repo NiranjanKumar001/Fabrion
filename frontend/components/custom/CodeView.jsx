@@ -182,7 +182,7 @@ function CodeView() {
         files={files}
         
         options={{
-          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
+          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'
           ]
         }}
       >

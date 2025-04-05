@@ -74,9 +74,5 @@ export default config;
     "framer-motion": "^11.0.0",
     "@radix-ui/react-slot": "^1.0.0",
     "@radix-ui/react-toast": "^1.0.0",
-    "three": "0.150.0",
-    "@react-three/fiber": "^8.12.0",
-    "@react-three/drei": "^9.55.3",
-    "@react-three/cannon": "^5.0.5",
   },
 }

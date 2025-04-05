@@ -2,6 +2,8 @@
 import "./globals.css";
 import Provider from "./provider";
 import ConvexClientProvider from "./ConvexClientProvider";
+// import NetworkWarning from "@/components/custom/NetworkStatus";
+import NetworkWarningToast from "@/components/custom/NetworkWarningToast";
 
 export const metadata = {
   title: "Fabrion",
@@ -14,7 +16,9 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning>
         <ConvexClientProvider>
           <Provider>
-           {children}</Provider>
+           {children}
+           <NetworkWarningToast/>
+           </Provider>
         </ConvexClientProvider>
       </body>
     </html>
