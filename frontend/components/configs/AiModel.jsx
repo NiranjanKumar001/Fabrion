@@ -34,7 +34,7 @@ export const createGeminiClient = (userApiKey = null) => {
   });
 
   const generationConfig = {
-      temperature: 0.3,
+      temperature: 0.5,
       topP: 0.85,
       topK: 50,
       maxOutputTokens: 8192,
@@ -43,7 +43,7 @@ export const createGeminiClient = (userApiKey = null) => {
   };
 
   const CodeGenerationConfig = {
-      temperature: 0.3,
+      temperature: 0.5,
       topP: 0.85,
       topK: 50,
       maxOutputTokens: 8192,
@@ -86,7 +86,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 // These exports maintain compatibility with your existing code
 export const chatSession = model.startChat({
   generationConfig: {
-      temperature: 0.3,
+      temperature: 0.5,
       topP: 0.85,
       topK: 50,
       maxOutputTokens: 8192,
@@ -98,7 +98,7 @@ export const chatSession = model.startChat({
 
 export const GenAiCode = model.startChat({
   generationConfig: {
-      temperature: 0.3,
+      temperature: 0.5,
       topP: 0.85,
       topK: 50,
       maxOutputTokens: 8192,
