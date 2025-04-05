@@ -11,7 +11,6 @@ import {
   SandpackPreview,
   SandpackFileExplorer,
 } from "@codesandbox/sandpack-react";
-// import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
 import { Loader2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -38,18 +37,24 @@ function CodeView() {
 
   const GetFiles = async () => {
     setLoading(true);
-    const result = await convex.query(api.workspace.GetWorkspace, {
-      workspaceId: id
-    });
-    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...result?.fileData }
-    setFiles(mergedFiles);
-    setLoading(false);
+    try {
+      const result = await convex.query(api.workspace.GetWorkspace, {
+        workspaceId: id
+      });
+      const mergedFiles = { ...Lookup.DEFAULT_FILE, ...result?.fileData };
+      setFiles(mergedFiles);
+    } catch (error) {
+      console.error("Failed to get workspace:", error);
+      setGenerationStatus("Error loading workspace files");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     if (messages?.length > 0) {
       const role = messages[messages?.length - 1].role;
-      if (role == 'user') {
+      if (role === 'user') {
         GenerateAiCode();
       }
     }
@@ -62,8 +67,11 @@ function CodeView() {
       
       // Initialize a temporary container for incrementally built files
       let generatedFiles = {};
+      let processedText = "";
       
       const PROMPT = JSON.stringify(messages) + " " + Prompt.CODE_GEN_PROMPT;
+      
+      console.log("Starting code generation request");
       
       const response = await fetch('/api/gen-ai-code', {
         method: 'POST',
@@ -74,8 +82,10 @@ function CodeView() {
       });
   
       if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
+        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
       }
+      
+      console.log("Response received:", response.status);
   
       // Handle streaming response
       const reader = response.body.getReader();
@@ -83,19 +93,27 @@ function CodeView() {
   
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          console.log("Stream complete");
+          break;
+        }
         
-        const text = decoder.decode(value);
-        // Split by double newlines which should separate JSON objects
-        const lines = text.split('\n\n');
+        const chunk = decoder.decode(value, {stream: true});
+        processedText += chunk;
+        
+        // Process complete JSON objects that end with newlines
+        const lines = processedText.split('\n');
+        // Keep the last potentially incomplete line
+        processedText = lines.pop() || "";
         
         for (const line of lines) {
-          // Only process lines that start with 'data: '
           if (line.startsWith('data: ')) {
             try {
               const jsonText = line.slice(6).trim();
               // Skip empty data chunks
-              if (!jsonText) continue;
+              if (!jsonText || jsonText === "[DONE]") continue;
+              
+              console.log("Processing data chunk:", jsonText.substring(0, 50) + "...");
               
               const data = JSON.parse(jsonText);
               
@@ -115,6 +133,17 @@ function CodeView() {
                 const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
                 setFiles(mergedFiles);
                 
+                // Progressive database update for each file
+                try {
+                  await UpdateFiles({
+                    workspaceId: id,
+                    files: { [data.fileName]: data.fileContent }
+                  });
+                  console.log(`Updated file ${data.fileName} in database`);
+                } catch (dbError) {
+                  console.error("Database update failed for file:", data.fileName, dbError);
+                }
+                
                 // Update the status with the current file and progress
                 setGenerationStatus(`Generating: ${data.fileName} (${data.progress || 0}%)`);
               }
@@ -126,26 +155,58 @@ function CodeView() {
                 setFiles(mergedFiles);
                 setGenerationStatus(data.message || "Files generated successfully!");
                 
-                // Save to database
+                // Final database update with all files
+                try {
+                  await UpdateFiles({
+                    workspaceId: id,
+                    files: generatedFiles
+                  });
+                  console.log("All files saved to database");
+                } catch (finalDbError) {
+                  console.error("Final database update failed:", finalDbError);
+                  setGenerationStatus("Error saving all files to database");
+                }
+              }
+              
+              if (data.error) {
+                console.error("Server reported error:", data.error);
+                setGenerationStatus("Error: " + data.error);
+              }
+            } catch (parseError) {
+              console.error("Error parsing stream data:", parseError);
+              console.log("Problematic data:", line.substring(0, 100));
+            }
+          }
+        }
+      }
+      
+      // Process any remaining data
+      if (processedText.trim()) {
+        try {
+          if (processedText.startsWith('data: ')) {
+            const jsonText = processedText.slice(6).trim();
+            if (jsonText && jsonText !== "[DONE]") {
+              const data = JSON.parse(jsonText);
+              console.log("Processing final data chunk");
+              
+              if (data.complete && data.files) {
+                generatedFiles = data.files;
+                const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
+                setFiles(mergedFiles);
+                setGenerationStatus("Files generated successfully!");
+                
                 await UpdateFiles({
                   workspaceId: id,
                   files: generatedFiles
                 });
               }
-              
-              if (data.error) {
-                setGenerationStatus("Error: " + data.error);
-                // console.error("Server reported error:", data.error);
-                // Don't throw here - just log and continue
-              }
-            } catch (parseError) {
-              console.error("Error parsing stream data:", parseError);
-              // console.log("Problematic data:", line.slice(6));
-              // Continue processing other chunks - don't throw
             }
           }
+        } catch (finalError) {
+          console.error("Error processing final chunk:", finalError);
         }
       }
+      
     } catch (error) {
       console.error("Error generating code:", error);
       setGenerationStatus("Error: " + error.message);
@@ -173,20 +234,19 @@ function CodeView() {
         </div>
       </div>
 
-      <SandpackProvider template="react" theme={"dark"}
+      <SandpackProvider 
+        template="react" 
+        theme={"dark"}
         customSetup={{
           dependencies: {
             ...Lookup.DEPENDANCY
           }
         }}
         files={files}
-        
         options={{
-          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'
-          ]
+          externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4']
         }}
       >
-
         <SandpackLayout>
           {activeTab == "code" ? (
             <>
