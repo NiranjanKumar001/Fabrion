@@ -167,7 +167,7 @@ function CodeView() {
 
               // Verify this data is for the current request
               if (data.requestId && data.requestId !== thisRequestId) {
-                console.log(`Ignoring data for old request ${data.requestId}`);
+                // console.log(`Ignoring data for old request ${data.requestId}`);
                 continue;
               }
 
