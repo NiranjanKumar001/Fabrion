@@ -314,6 +314,9 @@ function CodeView() {
           {loading && (
             <span className="text-xs text-yellow-400">Generating...</span>
           )}
+          {!loading && (
+            <span className="text-xs text-green-400">Generated</span>
+          )}
         </div>
       </div>
 
