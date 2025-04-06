@@ -228,7 +228,7 @@ function CodeView() {
               }
             } catch (parseError) {
               console.error("Error parsing stream data:", parseError);
-              console.log("Problematic data:", line.substring(0, 100));
+              // console.log("Problematic data:", line.substring(0, 100));
             }
           }
         }

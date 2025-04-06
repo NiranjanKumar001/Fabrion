@@ -178,7 +178,7 @@ function ChatView() {
               placeholder={Lookup.INPUT_PLACEHOLDER}
               value={userInput}
               onChange={(event) => setUserInput(event.target.value)}
-              className="outline-none bg-transparent w-full h-32 max-h-56 resize-none "
+              className="outline-none bg-transparent w-full h-32 max-h-56 resize-none no-scrollbar"
             />
             {userInput && (
               <ArrowRight
