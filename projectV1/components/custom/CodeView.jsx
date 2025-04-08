@@ -10,33 +10,11 @@ import {
   SandpackCodeEditor,
   SandpackPreview,
   SandpackFileExplorer,
-  useSandpack
 } from "@codesandbox/sandpack-react";
 import { useConvex, useMutation } from "convex/react";
-import { Loader2Icon, PlayCircle } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useContext, useEffect, useState, useRef } from "react";
-
-// Custom Run Button component
-const RunButton = () => {
-  const { sandpack } = useSandpack();
-  
-  const handleRun = () => {
-    sandpack.runSandpack();
-  };
-
-  return (
-    <div className="absolute bottom-[4] right-3 z-10">
-      <button
-        onClick={handleRun}
-        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full shadow-lg transition-colors"
-      >
-        <PlayCircle size={18} />
-        Run
-      </button>
-    </div>
-  );
-};
 
 function CodeView() {
   const [activeTab, setActiveTab] = useState("code");
@@ -357,6 +335,8 @@ function CodeView() {
         </div>
       </div>
 
+      
+
       <SandpackProvider
         template="react"
         theme={"dark"}
@@ -365,31 +345,27 @@ function CodeView() {
             ...Lookup.DEPENDANCY
           }
         }}
+
         files={files}
         options={{
           externalResources: ['https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'],
-          autorun: false, // Changed to false to make the Run button more useful
+          autorun: true,
           recompileMode: "immediate", 
           recompileDelay: 0,
         }}
       >
-        <div className="relative">
-          <SandpackLayout>
-            {activeTab === "code" ? (
-              <>
-                <SandpackFileExplorer style={{ height: "80vh" }} />
-                <SandpackCodeEditor style={{ height: "80vh" }} />
-              </>
-            ) : (
-              <>
-                <SandpackPreview style={{ height: "80vh" }} showNavigator={true} />
-              </>
-            )}
-          </SandpackLayout>
-          
-          {/* Run Button is positioned here so it appears in both tabs */}
-          <RunButton />
-        </div>
+        <SandpackLayout>
+          {activeTab === "code" ? (
+            <>
+              <SandpackFileExplorer style={{ height: "80vh" }} />
+              <SandpackCodeEditor style={{ height: "80vh" }} />
+            </>
+          ) : (
+            <>
+              <SandpackPreview style={{ height: "80vh" }} showNavigator={true} />
+            </>
+          )}
+        </SandpackLayout>
       </SandpackProvider>
 
       {loading && (
