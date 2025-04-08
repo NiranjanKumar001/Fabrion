@@ -163,7 +163,15 @@ function CodeView() {
               // Skip empty data chunks
               if (!jsonText || jsonText === "[DONE]") continue;
 
-              const data = JSON.parse(jsonText);
+              // Add a try-catch to handle malformed JSON safely
+              let data;
+              try {
+                data = JSON.parse(jsonText);
+              } catch (jsonError) {
+                console.error("Failed to parse JSON:", jsonError, "Raw data:", jsonText.substring(0, 100));
+                // Skip this malformed chunk but continue processing
+                continue;
+              }
 
               // Verify this data is for the current request
               if (data.requestId && data.requestId !== thisRequestId) {
@@ -227,8 +235,9 @@ function CodeView() {
                 setGenerationStatus("Error: " + data.error);
               }
             } catch (parseError) {
-              console.error("Error parsing stream data:", parseError);
-              // console.log("Problematic data:", line.substring(0, 100));
+              console.error("Error in stream processing:", parseError);
+              setGenerationStatus("Error processing response data");
+              // Continue processing other chunks instead of breaking
             }
           }
         }
@@ -240,28 +249,34 @@ function CodeView() {
           if (processedText.startsWith('data: ')) {
             const jsonText = processedText.slice(6).trim();
             if (jsonText && jsonText !== "[DONE]") {
-              const data = JSON.parse(jsonText);
+              try {
+                const data = JSON.parse(jsonText);
 
-              // Verify this data is for the current request
-              if (!data.requestId || data.requestId === thisRequestId) {
-                console.log("Processing final data chunk");
+                // Verify this data is for the current request
+                if (!data.requestId || data.requestId === thisRequestId) {
+                  console.log("Processing final data chunk");
 
-                if (data.complete && data.files) {
-                  generatedFiles = data.files;
-                  const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
-                  setFiles(mergedFiles);
-                  setGenerationStatus("Files generated successfully!");
+                  if (data.complete && data.files) {
+                    generatedFiles = data.files;
+                    const mergedFiles = { ...Lookup.DEFAULT_FILE, ...generatedFiles };
+                    setFiles(mergedFiles);
+                    setGenerationStatus("Files generated successfully!");
 
-                  await UpdateFiles({
-                    workspaceId: id,
-                    files: generatedFiles
-                  });
+                    await UpdateFiles({
+                      workspaceId: id,
+                      files: generatedFiles
+                    });
+                  }
                 }
+              } catch (jsonError) {
+                console.error("Failed to parse final JSON chunk:", jsonError);
+                setGenerationStatus("Error processing final response");
               }
             }
           }
         } catch (finalError) {
           console.error("Error processing final chunk:", finalError);
+          setGenerationStatus("Error processing final data");
         }
       }
 
@@ -269,7 +284,7 @@ function CodeView() {
       // Don't show errors for aborted requests
       if (error.name !== 'AbortError') {
         console.error(`Error generating code for request ${thisRequestId}:`, error);
-        setGenerationStatus("Error: " + error.message);
+        setGenerationStatus("Error: " + (error.message || "Failed to generate code"));
       } else {
         console.log(`Request ${thisRequestId} was aborted`);
       }
