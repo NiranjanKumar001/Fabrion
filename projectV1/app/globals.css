@@ -173,4 +173,9 @@
   scrollbar-width: none; /* Hide scrollbar for Firefox */
 }
 
-  
+
+/* not working wanted to hide the run button to implement the manual */
+/* 
+button[data-testid="run-button"] {
+  display: none !important;
+} */
