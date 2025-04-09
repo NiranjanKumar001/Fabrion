@@ -6,18 +6,18 @@ function Features() {
   const services = [
     {
       icon: "",
-      title: "Custom Design",
-      description: "Tailored websites that reffiect your brand and vision.",
+      title: "Minimal Interface",
+      description: "No clutter. Just you and your ideas.No clutter. Just you and your ideas.",
     },
     {
       icon: "",
-      title: "Responsive Layouts",
-      description: "Websites that work seamlessly son any device.",
+      title: "Layouts Creation",
+      description: "Websites that work seamlessly on any device.",
     },
     {
       icon: "",
-      title: "SEO Optimization",
-      description: "Improving your website's visibility on search engines.",
+      title: "AI Optimization",
+      description: "Generate content, sections, or styles with AI with your own Gemini api key.",
     },
   ];
 
