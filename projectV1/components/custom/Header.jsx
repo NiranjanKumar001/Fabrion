@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Image from 'next/image'
+// import Image from 'next/image'
 // import { UserDetailContext } from '@/context/UserDetailContext.jsx';
 // import { Stars } from 'lucide-react';
 
@@ -10,7 +10,7 @@ function Header() {
 
     return (
         <header className="flex justify-between items-center px-16 py-8 max-md:px-8 max-sm:px-5">
-      <Image src="/logo.png" alt="Company logo" className="w-[59px] h-[64px]" />
+      <img src="/logo.png" alt="Company logo" className="w-[59px] h-[64px]" />
 
       <nav className="flex gap-11 items-center max-md:hidden">
         <a href="#about" className="text-2xl font-medium text-zinc-700">

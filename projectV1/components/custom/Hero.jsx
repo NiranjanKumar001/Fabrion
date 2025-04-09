@@ -86,7 +86,7 @@ function Hero() {
             <div className='p-5 border rounded-xl max-w-2xl w-full mt-3' style={{ 
                 backgroundColor: Colors.BACKGROUND 
             }}> 
-                <div className='flex gap-2'> 
+                {/* <div className='flex gap-2'> 
                     <textarea 
                         placeholder={Lookup.INPUT_PLACEHOLDER} 
                         onChange={(event) => setUserInput(event.target.value)} 
@@ -98,7 +98,7 @@ function Hero() {
                             className='bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer' 
                         />
                     )}
-                </div> 
+                </div>  */}
                 <div> 
                     <Link className='h-5 w-5' /> 
                 </div> 
