@@ -19,6 +19,11 @@ function Features() {
       title: "AI Optimization",
       description: "Generate content, sections, or styles with AI with your own Gemini api key.",
     },
+    {
+      icon:"/images/4.png", 
+      title:"code genration",
+      description:"Generate code snippets for your projects with ease.",
+    }
   ];
 
   return (
