@@ -9,7 +9,6 @@ import { UserDetailContext } from '@/context/UserDetailContext';
 import { useMutation, useQuery } from 'convex/react'; 
 import { api } from '@/convex/_generated/api'; 
 import { useRouter } from 'next/navigation';
-
  
 function Hero() { 
     const [userInput, setUserInput] = useState('');
@@ -143,8 +142,9 @@ function Hero() {
         </div>
         <div className="relative h-[507px] w-[691px] max-md:w-full max-md:h-auto">
           <img
+          src="/images/Groups.png"
             alt="Website building illustration"
-            className="bg4 w-full h-full rounded-[25px] border-[2px] border-[#000]"
+            className="w-full h-full rounded-[25px] border-[2px] border-[#000]"
           />
         </div>
 
