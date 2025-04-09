@@ -1,7 +1,5 @@
 import React, { useContext } from 'react'
 import Image from 'next/image'
-import { Button } from '../ui/button.jsx'
-import Colors from '@/data/Colors'
 // import { UserDetailContext } from '@/context/UserDetailContext.jsx';
 // import { Stars } from 'lucide-react';
 
@@ -11,26 +9,28 @@ function Header() {
 
 
     return (
-        <div className='p-4 flex justify-between items-center'>
-            <Image src="/logo.png" alt="logo" width={40} height={40} />
-            {/* {!userDetail ? (
-                    <> */}
-                        <div className='items-end space-x-5'>
-                        <Button className="border border-gray-500 text-gray-500 hover:bg-gray-500 hover:text-white transition-all duration-300">
-                            About
-                        </Button>
-                        <Button style={{ backgroundColor: Colors.BLUE }}>
-                            Documentation
-                        </Button>
-                        </div>
-                    {/* </>
-                ) : ( */}
-                    {/* <Button className="border border-gray-500 text-gray-500 hover:bg-blue-400 hover:text-white transition-all duration-300">
-                        <Stars/>
-                        Dashboard
-                    </Button> */}
-                {/* )} */}
-        </div>
+        <header className="flex justify-between items-center px-16 py-8 max-md:px-8 max-sm:px-5">
+      <Image src="/logo.png" alt="Company logo" className="w-[59px] h-[64px]" />
+
+      <nav className="flex gap-11 items-center max-md:hidden">
+        <a href="#about" className="text-2xl font-medium text-zinc-700">
+          About
+        </a>
+        <a href="#services" className="text-2xl font-medium text-zinc-700">
+          Services
+        </a>
+        <a href="#contact" className="text-2xl font-medium text-neutral-700">
+          Contact
+        </a>
+        <button className=" h-16 text-2xl font-medium text-gray-800 bg-white rounded-2xl border-blue-500 border-[3px] w-[197px]">
+          Github Star
+        </button>
+      </nav>
+
+      <button className="hidden text-3xl max-md:block" aria-label="Menu">
+        <i className="ti ti-menu-2" />
+      </button>
+    </header>
     )
 }
 
