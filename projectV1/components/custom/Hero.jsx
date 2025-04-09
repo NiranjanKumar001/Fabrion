@@ -8,7 +8,8 @@ import { MessagesContext } from '@/context/MessagesContext';
 import { UserDetailContext } from '@/context/UserDetailContext'; 
 import { useMutation, useQuery } from 'convex/react'; 
 import { api } from '@/convex/_generated/api'; 
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
+
  
 function Hero() { 
     const [userInput, setUserInput] = useState('');
@@ -121,13 +122,41 @@ function Hero() {
         //         ))} 
         //     </div> 
         //    
-         <SignInDialog 
+         
+        // </div> 
+
+
+// redesign
+<section className="flex flex-col px-16 max-md:px-8 max-sm:px-5">
+      <div className="flex gap-16 justify-between items-center max-md:flex-col">
+        <div className="flex flex-col gap-9 max-w-[600px]">
+          <h1 className="text-7xl font-semibold leading-[94px] text-zinc-900 max-md:text-6xl max-md:leading-[70px] max-sm:text-4xl max-sm:leading-10">
+            Build your website
+          </h1>
+          <p className="text-3xl font-medium leading-10 text-zinc-700 max-md:text-2xl max-md:leading-9 max-sm:text-xl max-sm:leading-8">
+            We create custom websites to help businesses grow and succeed
+            online.
+          </p>
+          <button className="text-3xl font-semibold bg-blue-500 rounded-2xl border border-blue-600 h-[75px] text-slate-200 w-[228px]">
+            Get Started
+          </button>
+        </div>
+        <div className="relative h-[507px] w-[691px] max-md:w-full max-md:h-auto">
+          <img
+            alt="Website building illustration"
+            className="bg4 w-full h-full rounded-[25px] border-[2px] border-[#000]"
+          />
+        </div>
+
+        <SignInDialog 
                 openDialog={openDialog} 
                 closeDialog={(v) => setOpenDialog(v)}
                 onSignInSuccess={handleSignInSuccess}
             /> 
-        // </div> 
+      </div>
+    </section>
+
     ) 
 } 
- 
+
 export default Hero;
