@@ -5,17 +5,17 @@ import ServiceCard from "./ServiceCard";
 function Features() {
   const services = [
     {
-      icon: "",
+      icon: "/images/1.png",
       title: "Minimal Interface",
-      description: "No clutter. Just you and your ideas.No clutter. Just you and your ideas.",
+      description: "No clutter. Just you and your ideas.",
     },
     {
-      icon: "",
+      icon: "/images/2.png",
       title: "Layouts Creation",
       description: "Websites that work seamlessly on any device.",
     },
     {
-      icon: "",
+      icon: "/images/3.png",
       title: "AI Optimization",
       description: "Generate content, sections, or styles with AI with your own Gemini api key.",
     },
