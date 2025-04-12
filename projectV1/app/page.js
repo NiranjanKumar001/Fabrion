@@ -1,6 +1,6 @@
 // import Footer from "@/components/custom/Footer";
 import Features from "@/components/custom/Features";
-import Header from "@/components/custom/Header";
+// import Header from "@/components/custom/Header";
 import Hero from "@/components/custom/Hero";
 // import { Button } from "@/components/ui/button";
 // import Image from "next/image";
@@ -8,7 +8,7 @@ import Hero from "@/components/custom/Hero";
 export default function Home() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <Hero />
       {/* <Footer /> */}
       <Features/>

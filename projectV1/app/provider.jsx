@@ -77,7 +77,7 @@ function Provider({ children }) {
                     <MessagesContext.Provider value={{ messages, setMessages }}>
                         <NextThemesProvider
                             attribute="class"
-                            defaultTheme="light"
+                            defaultTheme="dark"
                             enableSystem
                             disableTransitionOnChange>
                             
