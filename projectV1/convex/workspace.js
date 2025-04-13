@@ -140,17 +140,16 @@ export const generateResponse = mutation({
   });
 
 
+
   // Add this to your Convex workspace file
 export const DeleteApiKey = mutation({
     args: {
       userId: v.id('users')
     },
     handler: async(ctx, args) => {
-      // Update user record with null apiKey
       const result = await ctx.db.patch(args.userId, {
         apiKey: ""  
-        // instead using null or undefined i have put a empty string as it req
       });
       return result;
     }
-  });
+  })
