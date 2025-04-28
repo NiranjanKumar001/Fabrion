@@ -7,6 +7,8 @@ const {
 const fs = require("node:fs");
 const mime = require("mime-types");
 
+
+//have to add model switching in the future
 // Modified version with better error handling
 const getApiKey = (userApiKey) => {
   // Validate keys before use
