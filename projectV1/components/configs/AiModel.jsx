@@ -8,7 +8,6 @@ const fs = require("node:fs");
 const mime = require("mime-types");
 
 
-//have to add model switching in the future
 // Modified version with better error handling
 const getApiKey = (userApiKey) => {
   // Validate keys before use
@@ -22,6 +21,7 @@ const getApiKey = (userApiKey) => {
 
   // Security: Never log full keys
   const keyType = userApiKey ? 'user-provided' : 'default';
+  // console.log(userApiKey)
   console.log(`Using ${keyType} API key (${apiKey.substring(0, 6)}...${apiKey.slice(-4)})`);
   return apiKey;
 };
