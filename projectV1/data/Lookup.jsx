@@ -1,14 +1,19 @@
 import dedent from "dedent";
 
 export default {
-  SUGGSTIONS: ['Create ToDo App in React', 'Create Budget Track App', 'Create Gym Managment Portal Dashboard', 'Create Quizz App On History', 'Create Login Signup Screen'],
+  SUGGSTIONS: [
+    'Create ToDo App in React',
+    'Create Budget Track App',
+    'Create Gym Managment Portal Dashboard',
+    'Create Quizz App On History',
+    'Create Login Signup Screen'
+  ],
   HERO_HEADING: 'What do you want to build?',
   HERO_DESC: 'Prompt, run, edit, and deploy full-stack web apps.',
   INPUT_PLACEHOLDER: 'What you want to build?',
   SIGNIN_HEADING: 'Continue With this',
   SIGNIN_SUBHEADING: 'To use this you must log into an existing account or create one.',
   SIGNIn_AGREEMENT_TEXT: 'By using this, you agree to the collection of usage data for analytics.',
-
 
   DEFAULT_FILE: {
     '/public/index.html': {
@@ -27,13 +32,13 @@ export default {
     },
     '/App.css': {
       code: `
-            @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;`
     },
     '/tailwind.config.js': {
       code: `
-            /** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -49,6 +54,7 @@ module.exports = {
 const config = {
   plugins: {
     tailwindcss: {},
+    
   },
 };
 
@@ -56,11 +62,11 @@ export default config;
 `
     }
   },
-  DEPENDANCY: {
 
+  DEPENDANCY: {
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    autoprefixer: "^10.0.0",
+    "autoprefixer": "^10.0.0",
     "uuid4": "^2.0.3",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
@@ -74,5 +80,8 @@ export default config;
     "framer-motion": "^11.0.0",
     "@radix-ui/react-slot": "^1.0.0",
     "@radix-ui/react-toast": "^1.0.0",
+    "@mui/material": "^5.15.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5"
   },
 }

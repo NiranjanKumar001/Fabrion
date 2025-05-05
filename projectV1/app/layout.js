@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning style={{ background: "url('/bg.jpg')", backgroundSize: 'cover', height: '100vh' }}>
         <ConvexClientProvider>
           <Provider>
            {children}
