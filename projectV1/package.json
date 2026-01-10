@@ -23,7 +23,7 @@
     "convex": "^1.21.0",
     "dedent": "^1.5.3",
     "lucide-react": "^0.483.0",
-    "next": "15.5.7",
+    "next": "15.5.9",
     "next-themes": "^0.4.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
