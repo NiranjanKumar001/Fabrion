@@ -31,7 +31,7 @@
 
 **Fabrion** is a web-based, AI-driven development environment that allows users to prompt, build, run, and preview React applications in real time directly from their browser. Inspired by platforms like Bolt.new and v0.dev, Fabrion utilizes Google Gemini's generative models to interpret natural language instructions and stream React codebases into an active client-side Sandpack preview container.
 
-![Fabrion Application Mockup Preview](./fabrion_preview.png)
+
 
 ---
 
