@@ -67,7 +67,7 @@ function Provider({ children }) {
 
     return (
         <div>
-            <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_KEY}>
+            <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_KEY || "100000000000-dummy.apps.googleusercontent.com"}>
                 <UserDetailContext.Provider value={{ 
                     userDetail, 
                     setUserDetail, 

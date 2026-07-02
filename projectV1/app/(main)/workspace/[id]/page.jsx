@@ -2,6 +2,7 @@
 import ChatView from '@/components/custom/ChatView' 
 import CodeView from '@/components/custom/CodeView'
 import Sidebar from '@/components/custom/Sidebar'  // Adjust the path as needed
+import Header from '@/components/custom/Header'
 import React, { useState, useEffect } from 'react'
 
 function Workspace() {
@@ -21,19 +22,22 @@ function Workspace() {
     }, []);
 
     return (
-        <div className='p-3 pr-5 mt-3 flex'>
-            <Sidebar 
-                isOpen={sidebarOpen} 
-                onClose={() => setSidebarOpen(false)} 
-            />
-            
-            {/* Main content */}
-            <div className={`grid grid-cols-1 md:grid-cols-4 gap-4 w-full transition-all duration-300 ${
-                sidebarOpen ? 'md:ml-64' : 'ml-0'
-            }`}>
-                <ChatView />
-                <div className='col-span-3'>
-                    <CodeView />
+        <div className="flex flex-col min-h-screen">
+            <Header />
+            <div className='p-3 pr-5 mt-3 flex flex-1'>
+                <Sidebar 
+                    isOpen={sidebarOpen} 
+                    onClose={() => setSidebarOpen(false)} 
+                />
+                
+                {/* Main content */}
+                <div className={`grid grid-cols-1 md:grid-cols-4 gap-4 w-full transition-all duration-300 ${
+                    sidebarOpen ? 'md:ml-64' : 'ml-0'
+                }`}>
+                    <ChatView />
+                    <div className='col-span-3'>
+                        <CodeView />
+                    </div>
                 </div>
             </div>
         </div>

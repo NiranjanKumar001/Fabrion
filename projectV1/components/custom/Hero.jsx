@@ -1,7 +1,7 @@
 "use client" 
 import Colors from '@/data/Colors'; 
 import Lookup from '@/data/Lookup' 
-import { ArrowRight, Link } from 'lucide-react' 
+import { ArrowRight, Link, Paperclip, Sparkles } from 'lucide-react' 
 import React, { useContext, useState, useEffect } from 'react' 
 import SignInDialog from './SignInDialog'; 
 import { MessagesContext } from '@/context/MessagesContext'; 
@@ -17,7 +17,7 @@ function Hero() {
     const { messages, setMessages } = useContext(MessagesContext); 
     const { userDetail, setUserDetail, isAuthLoading, refreshAuth } = useContext(UserDetailContext); 
     const [openDialog, setOpenDialog] = useState(false);
-
+ 
     const CreateWorkSpace = useMutation(api.workspace.CreateWorkspace); 
     const router = useRouter(); 
     
@@ -66,59 +66,84 @@ function Hero() {
             }
         } catch (error) {
             console.error("Error creating workspace:", error);
-            // You could add a user notification here
         }
     } 
     
     const handleSuggestionClick = (suggestion) => {
         onGenerate(suggestion);
     };
-
+ 
     const handleSignInSuccess = () => {
-        refreshAuth(); // Refresh auth state after sign-in
+        refreshAuth();
     };
-    // check
     
     return ( 
-        <div className="flex flex-col items-center mt-36 xl:mt-52 gap-2 " >
-            <h2 className='font-bold text-4xl text-[#F6F1E9]'>{Lookup.HERO_HEADING}</h2>
-            <p className='text-[#ffffff] font-medium'>{Lookup.HERO_DESC}</p>
-            <div className='p-5 border rounded-xl max-w-2xl w-full mt-3' style={{ 
-                backgroundColor: Colors.BACKGROUND ,
-                border: '2px solid #fff' 
-            }}> 
-                <div className='flex gap-2'> 
-                    <textarea 
-                        placeholder={Lookup.INPUT_PLACEHOLDER} 
-                        onChange={(event) => setUserInput(event.target.value)}
-                        className='outline-none bg-transparent w-full h-32 max-h-56 resize-none ' 
-                    /> 
-                    {userInput && (
-                        <ArrowRight 
-                            onClick={() => onGenerate(userInput)} 
-                            className='bg-amber-500 p-2 h-10 w-10 rounded-md cursor-pointer' 
-                        />
-                    )}
-                </div> 
-                <div> 
-                    <Link className='h-5 w-5' /> 
+        <div className="flex flex-col items-center mt-20 md:mt-32 px-4 max-w-4xl w-full text-center" >
+            {/* Visual highlight tag */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-950/20 text-cyan-400 text-xs font-semibold mb-6 animate-fade-in">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Gemini 2.0 Flash Enabled</span>
+            </div>
+
+            {/* Typography Title */}
+            <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tight bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent max-w-2xl leading-tight">
+                {Lookup.HERO_HEADING}
+            </h1>
+            
+            <p className="text-zinc-400 text-base sm:text-lg font-medium mt-4 max-w-lg leading-relaxed">
+                {Lookup.HERO_DESC}
+            </p>
+
+            {/* Prompt Input Container */}
+            <div className="w-full max-w-2xl mt-8 rounded-2xl border border-white/5 bg-zinc-950/40 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-zinc-800/80 focus-within:border-cyan-500/40 focus-within:ring-4 focus-within:ring-cyan-500/5 p-4 flex flex-col gap-3"> 
+                <textarea 
+                    placeholder={Lookup.INPUT_PLACEHOLDER} 
+                    onChange={(event) => setUserInput(event.target.value)}
+                    value={userInput}
+                    className="outline-none bg-transparent w-full h-24 max-h-56 resize-none text-zinc-100 placeholder-zinc-500 text-sm leading-relaxed" 
+                /> 
+                
+                <div className="flex justify-between items-center border-t border-white/5 pt-3">
+                    <div className="flex gap-2">
+                        <button className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 rounded-lg transition-colors cursor-pointer" title="Attach file">
+                            <Paperclip className="h-4.5 w-4.5" />
+                        </button>
+                        <button className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 rounded-lg transition-colors cursor-pointer" title="Add link">
+                            <Link className="h-4.5 w-4.5" />
+                        </button>
+                    </div>
+
+                    <button 
+                        onClick={() => userInput.trim() && onGenerate(userInput)}
+                        disabled={!userInput.trim()}
+                        className={`flex items-center justify-center p-2 rounded-lg transition-all duration-300 ${
+                            userInput.trim() 
+                            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95' 
+                            : 'bg-zinc-900 text-zinc-650 cursor-not-allowed'
+                        }`}
+                        title="Generate code"
+                    >
+                        <ArrowRight className="h-4 w-4" />
+                    </button>
                 </div> 
             </div> 
             
-            <div className="text-xs text-[#ffffff] mt-2">
-                {isAuthLoading ? "Checking authentication..." : 
-                 isUserReady ? "User authenticated" : "User not authenticated"}
+            {/* Minimalist Auth Indicator */}
+            <div className="text-xs font-semibold text-zinc-500 mt-4 tracking-wide uppercase">
+                {isAuthLoading ? "Verifying Session..." : 
+                 isUserReady ? "● Active Developer Session" : "○ Local Environment Mode"}
             </div>
             
-            <div className='flex flex-wrap max-w-2xl items-center justify-center gap-3 mt-8'> 
+            {/* Quick Suggestions */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-8 max-w-2xl"> 
                 {Lookup.SUGGSTIONS.map((suggestion, index) => ( 
-                    <h2 
+                    <button 
                         key={index} 
                         onClick={() => handleSuggestionClick(suggestion)} 
-                        className='p-1 px-2 border-white border-2 rounded-full text-sm text-white cursor-pointer'
+                        className="px-3.5 py-1.5 rounded-full text-xs font-medium text-zinc-400 bg-zinc-900/30 border border-white/5 hover:border-zinc-700 hover:bg-zinc-800/40 hover:text-zinc-150 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
                     >
                         {suggestion}
-                    </h2> 
+                    </button> 
                 ))} 
             </div> 
 
@@ -128,35 +153,6 @@ function Hero() {
                 onSignInSuccess={handleSignInSuccess}
             />         
         </div> 
-
-
-// redesign
-/* <section className="flex flex-col px-16 max-md:px-8 max-sm:px-5">
-      <div className="flex gap-16 justify-between items-center max-md:flex-col">
-        <div className="flex flex-col gap-9 max-w-[600px]">
-          <h1 className="text-7xl font-semibold leading-[94px] text-zinc-900 max-md:text-6xl max-md:leading-[70px] max-sm:text-4xl max-sm:leading-10">
-            Build your website
-          </h1>
-          <p className="text-3xl font-medium leading-10 text-zinc-700 max-md:text-2xl max-md:leading-9 max-sm:text-xl max-sm:leading-8">
-            We create custom websites to help businesses grow and succeed
-            online.
-          </p>
-          <button className="text-3xl font-semibold bg-blue-500 rounded-2xl border border-blue-600 h-[75px] text-slate-200 w-[228px]">
-            Get Started
-          </button>
-        </div>
-        <div className="relative h-[507px] w-[691px] max-md:w-full max-md:h-auto">
-          <img
-          src="/images/Groups.png"
-            alt="Website building illustration"
-            className="w-full h-full rounded-[25px] border-[2px] border-[#000]"
-          />
-        </div>
-
-        
-      </div>
-    </section> */
-
     ) 
 } 
 

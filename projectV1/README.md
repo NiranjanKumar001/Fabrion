@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🖥️ Fabrion Frontend Client (`projectV1`)
 
-## Getting Started
+This is the Next.js frontend client for **Fabrion**, housing the UI, Google OAuth client connections, Sandpack code execution canvas, and AI streaming endpoint integrations.
 
-First, run the development server:
+For the comprehensive system architecture, diagrams, and feature logs, please consult the [Main README.md](../README.md).
 
+---
+
+## ⚡ Quick Start
+
+### 1. Installation
+Ensure you are in this subdirectory:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd projectV1
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment Variables
+Create a `.env.local` file in this directory and supply:
+```env
+NEXT_PUBLIC_GEMINI_API_KEY="your-gemini-key"
+NEXT_PUBLIC_CONVEX_URL="your-convex-deployment-url"
+NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_KEY="your-google-oauth-client-id"
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the client-side builder.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🖥️ Key Views & Navigation
 
-To learn more about Next.js, take a look at the following resources:
+*   **🏠 Home Page (`/`):** Features the interactive AI developer prompt compiler, workspace suggestions, and the main navigation header.
+*   **🛠️ Workspace Dashboard (`/workspace/[id]`):** Renders the active workspace containing the real-time AI Chat view, live-compiled Sandpack Code canvas, and sliding workspace history Sidebar.
+*   **👤 Shared Navigation Header:** Renders user avatar metadata, toggles the OAuth sign-in flow, handles custom profile settings modal access, and performs safe storage/session sign-out with instant redirection.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Main Tech Dependencies
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   **Next.js 15.5:** Powering App-Router layouts and API endpoint logic.
+*   **Tailwind CSS v4:** Styles the core client environment with responsive neon aesthetics.
+*   **CodeSandbox Sandpack React:** Compiles generated code in client-side secure sandboxes.
+*   **Google Generative AI SDK:** Interfaces directly with Google's API to construct Vite-ready files.
+*   **Convex Client:** Provides reactive client-side bindings to real-time database queries/mutations.
+*   **Sentry SDK:** Error boundaries logging edge and server telemetry.
